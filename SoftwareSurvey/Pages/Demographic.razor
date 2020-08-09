@@ -63,6 +63,7 @@
 
     protected void HandleValidSubmit()
     {
+        _stateService.Save(Model);
         NavigationManager.NavigateTo("/ThankYou");
     }
 }
