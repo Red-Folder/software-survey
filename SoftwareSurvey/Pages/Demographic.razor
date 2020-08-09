@@ -1,0 +1,68 @@
+﻿@page "/Demographic"
+
+<h1>Demographic</h1>
+
+<EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit" class="">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <Label For="@(() => Model.CompanySize)" />
+        <InputSelect id="company-size" @bind-Value="@Model.CompanySize" class="form-control">
+            <option value="">Please select</option>
+            <option value="Myself only">Myself only</option>
+            <option value="2-10 employees">2-10 employees</option>
+            <option value="11-50 employees">11-50 employees</option>
+            <option value="51-200 employees">51-200 employees</option>
+            <option value="201-500 employees">201-500 employees</option>
+            <option value="500-1,000 employees">500-1000 employees</option>
+            <option value="1,001-5,000 employees">1001 - 5000 employees</option>
+            <option value="5,001-10,000 employees">5001 - 10,000 employees</option>
+            <option value="10,001+ employees">10,001+ employees</option>
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <Label For="@(() => Model.JobSeniority)" />
+        <InputSelect id="job-seniority" @bind-Value="@Model.JobSeniority" class="form-control">
+            <option value="">Please select</option>
+            <option value="Senior">Senior</option>
+            <option value="Manager">Manager</option>
+            <option value="Director">Director</option>
+            <option value="CXO">CXO</option>
+            <option value="Owner">Owner</option>
+            <option value="Partner">Partner</option>
+            <option value="Other">Other</option>
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <Label For="@(() => Model.JobTitle)" />
+        <InputText id="job-title" @bind-Value="@Model.JobTitle" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    protected Models.Demographic Model;
+
+    [Inject]
+    protected SoftwareSurvey.Services.IStateService _stateService { get; set; }
+
+    [Inject]
+    protected NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Model = _stateService.GetOrNew<Models.Demographic>();
+    }
+
+    protected void HandleValidSubmit()
+    {
+        NavigationManager.NavigateTo("/ThankYou");
+    }
+}
