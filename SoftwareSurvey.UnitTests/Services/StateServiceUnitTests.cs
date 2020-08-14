@@ -1,5 +1,9 @@
-﻿using SoftwareSurvey.Models;
+﻿using Moq;
+using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SoftwareSurvey.UnitTests.Services
@@ -7,10 +11,12 @@ namespace SoftwareSurvey.UnitTests.Services
     public class StateServiceUnitTests
     {
         private readonly StateService _sut;
+        private readonly Mock<IPersistanceManager> _persistanceManager;
 
         public StateServiceUnitTests()
         {
-            _sut = new StateService();
+            _persistanceManager = new Mock<IPersistanceManager>();
+            _sut = new StateService(_persistanceManager.Object);
         }
 
         [Fact]
@@ -67,17 +73,78 @@ namespace SoftwareSurvey.UnitTests.Services
             Assert.Equal("Updated", _sut.GetOrNew<TestState>().Value);
         }
 
-        public class TestState: IStateObject
+        [Fact]
+        public async Task Persist_WillCallPersistanceManager()
+        {
+            _sut.Save(new TestState
+            {
+                Value = "Original"
+            });
+
+            await _sut.Persist();
+
+            _persistanceManager.Verify(x => x.Persist(It.IsAny<List<IStateObject>>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Persist_ReturnTrue_OnSuccess()
+        {
+            _sut.Save(new TestState
+            {
+                Value = "Original"
+            });
+            _persistanceManager
+                .Setup(x => x.Persist(It.IsAny<List<IStateObject>>()))
+                .ReturnsAsync(true);
+
+            var result = await _sut.Persist();
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task Persist_ReturnFalse_OnFailure()
+        {
+            _sut.Save(new TestState
+            {
+                Value = "Original"
+            });
+            _persistanceManager
+                .Setup(x => x.Persist(It.IsAny<List<IStateObject>>()))
+                .ReturnsAsync(false);
+
+            var result = await _sut.Persist();
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task Persist_ReturnFalse_OnException()
+        {
+            _sut.Save(new TestState
+            {
+                Value = "Original"
+            });
+            _persistanceManager
+                .Setup(x => x.Persist(It.IsAny<List<IStateObject>>()))
+                .Throws(new Exception("Something broke"));
+
+            var result = await _sut.Persist();
+
+            Assert.False(result);
+        }
+
+        private class TestState: IStateObject
         {
             public string Value { get; set; }
         }
 
-        public class TestState2 : IStateObject
+        private class TestState2 : IStateObject
         {
             public string Value { get; set; }
         }
 
-        public class TestState3 : IStateObject
+        private class TestState3 : IStateObject
         {
             public string Value { get; set; }
         }

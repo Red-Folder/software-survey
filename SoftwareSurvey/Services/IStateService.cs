@@ -1,4 +1,5 @@
 ﻿using SoftwareSurvey.Models;
+using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Services
 {
@@ -6,5 +7,7 @@ namespace SoftwareSurvey.Services
     {
         T GetOrNew<T>() where T : IStateObject, new();
         void Save<T>(T state) where T : IStateObject;
+
+        Task<bool> Persist();
     }
 }

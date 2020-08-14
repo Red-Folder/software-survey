@@ -1,46 +1,45 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
 using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Components
 {
-    public partial class SurveyNavigation
+    public partial class SurveyNavigation<T> where T: IStateObject, new()
     {
-        [Parameter]
-        public object Model { get; set; }
-
-        [Parameter]
-        public EventCallback Save { get; set; }
-
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
         [Inject]
         private ISurveyNavigationService _surveyNavigationService { get; set; }
 
+        [Inject]
+        private IStateService _stateService { get; set; }
+
+        public T Model;
         private EditContext _editContext;
 
         protected override void OnInitialized()
         {
-            if (Model == null) Model = new { };
+            Model = _stateService.GetOrNew<T>();
             _editContext = new EditContext(Model);
        }
 
-        private async Task HandleNext()
+        private void HandleNext()
         {
             if (IsValid && _surveyNavigationService.HasNext)
             {
-                await Save.InvokeAsync(null);
+                _stateService.Save(Model);
                 _surveyNavigationService.HandleNext();
             }
         }
 
-        private async Task HandlePrevious()
+        private void HandlePrevious()
         {
             if (IsValid && _surveyNavigationService.HasPrevious)
             {
-                await Save.InvokeAsync(null);
+                _stateService.Save(Model);
                 _surveyNavigationService.HandlePrevious();
             }
         }

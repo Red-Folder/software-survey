@@ -2,10 +2,10 @@
 
 <h1>Demographic</h1>
 
-<SurveyNavigation Model="@Model" Save="@Save">
+<SurveyNavigation T="Models.Demographic" @ref="Parent">
     <div class="form-group">
-        <Label For="@(() => Model.CompanySize)" />
-        <InputSelect id="company-size" @bind-Value="@Model.CompanySize" class="form-control">
+        <Label For="@(() => Parent.Model.CompanySize)" />
+        <InputSelect id="company-size" @bind-Value="@Parent.Model.CompanySize" class="form-control">
             <option value="">Please select</option>
             <option value="Myself only">Myself only</option>
             <option value="2-10 employees">2-10 employees</option>
@@ -20,8 +20,8 @@
     </div>
 
     <div class="form-group">
-        <Label For="@(() => Model.JobSeniority)" />
-        <InputSelect id="job-seniority" @bind-Value="@Model.JobSeniority" class="form-control">
+        <Label For="@(() => Parent.Model.JobSeniority)" />
+        <InputSelect id="job-seniority" @bind-Value="@Parent.Model.JobSeniority" class="form-control">
             <option value="">Please select</option>
             <option value="Senior">Senior</option>
             <option value="Manager">Manager</option>
@@ -34,7 +34,12 @@
     </div>
 
     <div class="form-group">
-        <Label For="@(() => Model.JobTitle)" />
-        <InputText id="job-title" @bind-Value="@Model.JobTitle" class="form-control" />
+        <Label For="@(() => Parent.Model.JobTitle)" />
+        <InputText id="job-title" @bind-Value="@Parent.Model.JobTitle" class="form-control" />
     </div>
 </SurveyNavigation>
+
+@code
+{
+    private SurveyNavigation<Models.Demographic> Parent;
+}

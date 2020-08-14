@@ -28,6 +28,7 @@ namespace SoftwareSurvey
             services.AddScoped<IStateService, StateService>();
             services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
             services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
+            services.AddTransient<IPersistanceManager, PersistanceManager>();
             services.AddSingleton<ISteps>(x =>
             {
                 var start = new Step
