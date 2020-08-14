@@ -1,0 +1,28 @@
+﻿<h3>-----------</h3>
+
+<EditForm EditContext="@_editContext" class="">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    @ChildContent
+
+
+    @if (HasPrevious)
+    {
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" @onclick="HandlePrevious">Previous</button>
+        </div>
+    }
+
+    @if (HasNext)
+    {
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" @onclick="HandleNext">Next</button>
+        </div>
+    }
+</EditForm>
+
+
+
+
+<h3>-----------</h3>

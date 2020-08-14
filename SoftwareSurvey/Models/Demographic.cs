@@ -15,5 +15,7 @@ namespace SoftwareSurvey.Models
 
         [DisplayName("Job Title (optional)")]
         public string JobTitle { get; set; }
+
+        public bool IsTest => true;
     }
 }

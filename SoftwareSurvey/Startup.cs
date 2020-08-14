@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
+using System.Collections.Generic;
 
 namespace SoftwareSurvey
 {
@@ -24,6 +26,36 @@ namespace SoftwareSurvey
             services.AddServerSideBlazor();
 
             services.AddScoped<IStateService, StateService>();
+            services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
+            services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
+            services.AddSingleton<ISteps>(x =>
+            {
+                var start = new Step
+                {
+                    Path = "",
+                    Name = "Start"
+                };
+                var demographic = new Step
+                {
+                    Path = "Demographic",
+                    Name = "Demographic"
+                };
+                var thankYou = new Step
+                {
+                    Path = "ThankYou",
+                    Name = "Thank You"
+                };
+                start.NextStep = demographic;
+                demographic.PreviousStep = start;
+                demographic.NextStep = thankYou;
+
+                return new Steps(new List<Step>
+                {
+                    start,
+                    demographic,
+                    thankYou
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
