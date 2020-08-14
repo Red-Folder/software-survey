@@ -2,7 +2,7 @@
 
 <h1>Demographic</h1>
 
-<SurveyNavigation T="Models.Demographic" @ref="Parent">
+<SurveyNavigation T="Models.Demographic" @ref=Parent>
     <div class="form-group">
         <Label For="@(() => Parent.Model.CompanySize)" />
         <InputSelect id="company-size" @bind-Value="@Parent.Model.CompanySize" class="form-control">
