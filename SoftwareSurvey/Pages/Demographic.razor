@@ -42,4 +42,15 @@
 @code
 {
     private SurveyNavigation<Models.Demographic> Parent;
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementById", "company-size");
+        }
+    }
 }
