@@ -32,6 +32,7 @@ steps:
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*.UnitTests.dll
+     **\$(BuildConfiguration)\**\*.UnitTests.dll
      !**\obj\**
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
