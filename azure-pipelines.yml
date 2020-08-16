@@ -31,10 +31,7 @@ steps:
 - task: VSTest@2
   inputs:
     testAssemblyVer2: |
-     **\$(BuildConfiguration)\*test*.dll
-     **\$(BuildConfiguration)\**\*test*.dll
-     !**\Microsoft.TestPlatform*
-     !**\Microsoft.VisualStudio.TestPlatform*
+     **\$(BuildConfiguration)\*.UnitTests.dll
      !**\obj\**
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
