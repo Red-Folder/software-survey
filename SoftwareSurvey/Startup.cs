@@ -26,16 +26,7 @@ namespace SoftwareSurvey
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped(x => new SurveyResponse
-            {
-                Id = Guid.NewGuid().ToString(),
-                Year = DateTime.Now.Year,
-                CreatedTimestamp = DateTime.Now,
-                Demographic = new Demographic()
-            });
-            services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
-            services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
-            services.AddTransient<IPersistanceManager, FakePersistanceManager>();
+            services.AddSingleton(x => Configuration.GetSection(PersistanceConfiguration.Section).Get<PersistanceConfiguration>());
             services.AddSingleton<ISteps>(x =>
             {
                 var start = new Step
@@ -64,6 +55,19 @@ namespace SoftwareSurvey
                     thankYou
                 });
             });
+
+            services.AddScoped(x => new SurveyResponse
+            {
+                Id = Guid.NewGuid().ToString(),
+                Year = DateTime.Now.Year,
+                CreatedTimestamp = DateTime.Now,
+                Demographic = new Demographic()
+            });
+
+            services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
+            services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
+            //services.AddTransient<IPersistanceManager, FakePersistanceManager>();
+            services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
