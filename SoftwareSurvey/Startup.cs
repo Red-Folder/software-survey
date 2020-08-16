@@ -84,7 +84,6 @@ namespace SoftwareSurvey
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
