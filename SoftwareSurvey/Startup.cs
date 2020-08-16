@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
+using System;
 using System.Collections.Generic;
 
 namespace SoftwareSurvey
@@ -25,10 +26,16 @@ namespace SoftwareSurvey
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped<IStateService, StateService>();
+            services.AddScoped(x => new SurveyResponse
+            {
+                Id = Guid.NewGuid().ToString(),
+                Year = DateTime.Now.Year,
+                CreatedTimestamp = DateTime.Now,
+                Demographic = new Demographic()
+            });
             services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
             services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
-            services.AddTransient<IPersistanceManager, PersistanceManager>();
+            services.AddTransient<IPersistanceManager, FakePersistanceManager>();
             services.AddSingleton<ISteps>(x =>
             {
                 var start = new Step

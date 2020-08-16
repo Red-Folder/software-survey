@@ -1,14 +1,12 @@
 ﻿using SoftwareSurvey.Models;
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Services
 {
-    public class PersistanceManager : IPersistanceManager
+    public class FakePersistanceManager : IPersistanceManager
     {
-        public async Task<bool> Persist(List<IStateObject> stateObjects)
+        public async Task<bool> Persist(SurveyResponse surveyResponse)
         {
             await Task.Run(() => Thread.Sleep(5000));
             return true;

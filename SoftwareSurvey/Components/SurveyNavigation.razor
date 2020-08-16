@@ -1,30 +1,21 @@
-﻿@typeparam T
+﻿<h3>-----------</h3>
 
-<h3>-----------</h3>
+@if (HasModel)
+{
+    <EditForm EditContext="@_editContext" class="">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-<EditForm EditContext="@_editContext" class="">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+        @ChildContent
 
+        <NavigationButtons ShowPrevious="@HasPrevious" PreviousHandler="@HandlePrevious" ShowNext="@HasNext" NextHandler="@HandleNext"></NavigationButtons>
+    </EditForm>
+}
+else
+{
     @ChildContent
 
-
-    @if (HasPrevious)
-    {
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary" @onclick="HandlePrevious">Previous</button>
-        </div>
-    }
-
-    @if (HasNext)
-    {
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary" @onclick="HandleNext">Next</button>
-        </div>
-    }
-</EditForm>
-
-
-
+    <NavigationButtons ShowPrevious="@HasPrevious" PreviousHandler="@HandlePrevious" ShowNext="@HasNext" NextHandler="@HandleNext"></NavigationButtons>
+}
 
 <h3>-----------</h3>

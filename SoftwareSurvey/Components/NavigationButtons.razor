@@ -1,0 +1,27 @@
+﻿@if (ShowPrevious)
+{
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" @onclick="PreviousHandler">Previous</button>
+    </div>
+}
+
+@if (ShowNext)
+{
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" @onclick="NextHandler">Next</button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool ShowPrevious { get; set; }
+
+    [Parameter]
+    public bool ShowNext { get; set; }
+
+    [Parameter]
+    public EventCallback PreviousHandler { get; set; }
+
+    [Parameter]
+    public EventCallback NextHandler { get; set; }
+}

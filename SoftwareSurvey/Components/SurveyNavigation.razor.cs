@@ -2,49 +2,57 @@
 using Microsoft.AspNetCore.Components.Forms;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
-using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Components
 {
-    public partial class SurveyNavigation<T> where T: IStateObject, new()
+    public partial class SurveyNavigation
     {
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
+        [Parameter]
+        public IStateObject Model { get; set; }
+
         [Inject]
         private ISurveyNavigationService _surveyNavigationService { get; set; }
 
-        [Inject]
-        private IStateService _stateService { get; set; }
-
-        public T Model;
         private EditContext _editContext;
+
+        private bool HasModel => Model != null;
 
         protected override void OnInitialized()
         {
-            Model = _stateService.GetOrNew<T>();
-            _editContext = new EditContext(Model);
+            if (HasModel)
+            {
+                _editContext = new EditContext(Model);
+            }
        }
 
         private void HandleNext()
         {
-            if (IsValid && _surveyNavigationService.HasNext)
+            if (_surveyNavigationService.HasNext)
             {
-                _stateService.Save(Model);
+                if (ShouldNotChangePageDueToInvalidModel)
+                {
+                    return;
+                }
                 _surveyNavigationService.HandleNext();
             }
         }
 
         private void HandlePrevious()
         {
-            if (IsValid && _surveyNavigationService.HasPrevious)
+            if (_surveyNavigationService.HasPrevious)
             {
-                _stateService.Save(Model);
+                if (ShouldNotChangePageDueToInvalidModel)
+                {
+                    return;
+                }
                 _surveyNavigationService.HandlePrevious();
             }
         }
 
-        private bool IsValid => _editContext.Validate();
+        private bool ShouldNotChangePageDueToInvalidModel => HasModel && !_editContext.Validate();
         private bool HasNext => _surveyNavigationService.HasNext;
         private bool HasPrevious => _surveyNavigationService.HasPrevious;
     }
