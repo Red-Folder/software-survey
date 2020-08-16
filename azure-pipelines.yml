@@ -33,12 +33,13 @@ steps:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
      **\$(BuildConfiguration)\**\*test*.dll
-     !**\*Microsoft.VisualStudio.TestPlatform*
+     !**\Microsoft.TestPlatform*
      !**\obj\**
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     codeCoverageEnabled: True
     otherConsoleOptions: '/platform:x64 /Framework:.NETCoreApp,Version=v3.1 /logger:console;verbosity="normal" '
+
 
 - task: PublishBuildArtifacts@1
   inputs:
