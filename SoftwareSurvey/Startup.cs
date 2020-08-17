@@ -68,6 +68,7 @@ namespace SoftwareSurvey
             services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
             //services.AddTransient<IPersistanceManager, FakePersistanceManager>();
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
