@@ -30,9 +30,15 @@
     </script>
 </head>
 <body>
-    <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
-    </app>
+    <header>
+        <span>ATTITUDES TO CUSTOM SOFTWARE DEVELOPMENT SURVEY</span>
+    </header>
+
+    <div class="container">
+        <app>
+            <component type="typeof(App)" render-mode="ServerPrerendered" />
+        </app>
+    </div>
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
@@ -44,6 +50,13 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <footer>
+        <a href="https://red-folder.com">
+            <img src="/images/RFCLogo48.png" alt="RFC Logo" />
+        </a>
+        <p class="copyright">RED FOLDER CONSULTANCY LIMITED &copy; @DateTime.Now.Year</p>
+    </footer>
 
     <script src="_framework/blazor.server.js"></script>
     <script src="/scripts//SurverySite.js"></script>

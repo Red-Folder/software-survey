@@ -1,17 +1,15 @@
-﻿@if (ShowPrevious)
-{
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary" @onclick="PreviousHandler">Previous</button>
-    </div>
-}
+﻿<div class="form-group navigation-buttons">
+    @if (ShowPrevious)
+    {
+        <button type="submit" class="btn previous-navigation-button" @onclick="PreviousHandler">Previous</button>
+    }
+    @if (ShowNext)
+    {
+        <button type="submit" class="btn next-navigation-button" @onclick="NextHandler">Next</button>
+    }
 
-@if (ShowNext)
-{
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary" @onclick="NextHandler">Next</button>
-    </div>
-}
-
+    <div class="clear"></div>
+</div>
 @code {
     [Parameter]
     public bool ShowPrevious { get; set; }

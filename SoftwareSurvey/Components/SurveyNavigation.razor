@@ -1,6 +1,4 @@
-﻿<h3>-----------</h3>
-
-@if (HasModel)
+﻿@if (HasModel)
 {
     <EditForm EditContext="@_editContext" class="">
         <DataAnnotationsValidator />
@@ -17,5 +15,3 @@ else
 
     <NavigationButtons ShowPrevious="@HasPrevious" PreviousHandler="@HandlePrevious" ShowNext="@HasNext" NextHandler="@HandleNext"></NavigationButtons>
 }
-
-<h3>-----------</h3>

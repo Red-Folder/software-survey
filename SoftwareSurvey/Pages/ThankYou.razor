@@ -1,18 +1,50 @@
 ﻿@page "/ThankYou"
 
-<h3>ThankYou</h3>
 
 <SurveyNavigation>
     @if (Saved)
     {
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur erat nulla, viverra et porta nec, tempus vitae mi. Pellentesque a purus molestie, porttitor mi id, placerat augue. Vivamus erat ante, faucibus non condimentum ut, pretium vitae dolor. Maecenas finibus fermentum felis a euismod. Donec finibus, tellus in aliquam faucibus, orci metus commodo quam, porta volutpat augue metus et odio. Curabitur dui augue, ullamcorper eu ultricies non, ultricies vitae erat. Quisque euismod ipsum eleifend, cursus nibh ac, maximus nunc. Donec erat libero, viverra at eros quis, mattis ultricies purus.
-        </p>
+        if (Error)
+        {
+            <h1>TODO</h1>
+            <p>Do something on error.  Allow a retry?</p>
+        }
+        else
+        {
+            <h1>THANK YOU</h1>
+            <p>
+                Your valuable responses will be used to produce a report of UK Executive's attitude towards custom Software Development.
+            </p>
+            <hr />
+
+            <p>In the meanwhile;</p>
+
+            <div class="podcast-link">
+                <h2>Listen to the podcast</h2>
+                <div class="text-center">
+                    <a href="https://red-folder.com/podcasts">
+                        <img src="/images/PodcastLogo-250x250.png" alt="Podcast Logo" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="newsletter-signup">
+                <h2>Sign up to the newsletter</h2>
+                <form class="form-inline" action="https://tinyletter.com/red-folder" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/red-folder', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+                    <input type="hidden" value="1" name="embed" />
+
+                    <input class="form-control" type="text" name="email" id="tlemail" placeholder="Your email address" />
+
+                    <button type="submit" class="btn" value="Subscribe">Subscribe to the newsletter</button>
+                </form>
+            </div>
+        }
     }
     else
     {
-        <p>
-            Saving ...
+        <h1>SAVING ...</h1>
+        <p class="loading-spinner">
+            <LoadingSpinner></LoadingSpinner>
         </p>
     }
 </SurveyNavigation>

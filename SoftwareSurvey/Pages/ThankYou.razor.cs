@@ -14,12 +14,14 @@ namespace SoftwareSurvey.Pages
         private IPersistanceManager _persistanceManager { get; set; }
 
         private bool Saved { get; set; }
+        private bool Error { get; set; }
 
         protected override void OnInitialized()
         {
             var task = _persistanceManager.Persist(_surveyResponse);
             task.ContinueWith(async x =>
             {
+                Error = x.Result;
                 Saved = true;
                 await InvokeAsync(StateHasChanged);
             });
