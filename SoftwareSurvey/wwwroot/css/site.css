@@ -14,10 +14,11 @@ body {
     margin-right: auto;
 }
 
-.container {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+.app-container {
+    padding: 0.5rem;
     background-color: white;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -117,4 +118,54 @@ h2 {
 .newsletter-signup form button {
     width: 100%;
     margin-top: 0.5rem;
+}
+
+
+
+input[type='radio'] {
+    transform: scale(1.5);
+}
+
+.software-types {
+    display: grid;
+    grid-template-columns: 7fr 1fr 0.5fr repeat(5, 1fr);
+}
+
+.software-types .header {
+    writing-mode: vertical-lr;
+    text-align: right;
+    padding-bottom: 0.5rem;
+}
+
+.software-types input {
+    justify-self: center;
+    align-self: center;
+}
+
+.software-type-description {
+    grid-column: span 8;
+    font-size: 0.75rem;
+}
+
+.software-types hr {
+    grid-column: span 8;
+    width: 100%;
+}
+
+.software-types .validation-message {
+    grid-column: span 8;
+}
+
+.software-types .valid, .software-types .valid.modified:not([type=checkbox]) {
+    outline: none;
+}
+.software-types .invalid {
+    outline: none;
+    color: red;
+}
+
+.validation-message {
+    font-size: 0.75rem;
+    font-weight: bold;
+    font-style: italic;
 }

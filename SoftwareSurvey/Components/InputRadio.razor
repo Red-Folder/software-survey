@@ -1,0 +1,64 @@
+﻿@using System.Globalization
+@typeparam TValue
+@inherits InputBase<TValue>
+
+<input @attributes="AdditionalAttributes" type="radio" value="@SelectedValue" checked="@(SelectedValue.Equals(Value))" @onchange="OnChange" />
+
+@code {
+    [Parameter]
+    public TValue SelectedValue { get; set; }
+
+    private void OnChange(ChangeEventArgs args)
+    {
+        CurrentValueAsString = args.Value.ToString();
+    }
+
+    protected override bool TryParseValueFromString(string value, out TValue result, out string validationErrorMessage)
+    {
+        var type = typeof(TValue);
+        if (Nullable.GetUnderlyingType(type) != null)
+        {
+            type = Nullable.GetUnderlyingType(type);
+        }
+
+        if (type == typeof(string))
+        {
+            result = (TValue)(object)value;
+            validationErrorMessage = null;
+            return true;
+        }
+        else if (type.IsEnum)
+        {
+            var success = BindConverter.TryConvertTo<TValue>(value, CultureInfo.CurrentCulture, out var parsedValue);
+            if (success)
+            {
+                result = parsedValue;
+                validationErrorMessage = null;
+                return true;
+            }
+            else
+            {
+                result = default;
+                validationErrorMessage = $"The {FieldIdentifier.FieldName} field is not valid.";
+                return false;
+            }
+        }
+        if (type == typeof(int))
+        {
+            if (int.TryParse(value, out var resultInt))
+            {
+                result = (TValue)(object)resultInt;
+                validationErrorMessage = null;
+                return true;
+            }
+            else
+            {
+                result = default;
+                validationErrorMessage = "The chosen value is not a valid number.";
+                return false;
+            }
+        }
+
+        throw new InvalidOperationException($"{GetType()} does not support the type '{typeof(TValue)}'.");
+    }
+}

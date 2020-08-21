@@ -39,6 +39,11 @@ namespace SoftwareSurvey
                     Path = "Demographic",
                     Name = "Demographic"
                 };
+                var softwareTypes = new Step
+                {
+                    Path = "SoftwareTypes",
+                    Name = "Software Types"
+                };
                 var thankYou = new Step
                 {
                     Path = "ThankYou",
@@ -46,12 +51,15 @@ namespace SoftwareSurvey
                 };
                 start.NextStep = demographic;
                 demographic.PreviousStep = start;
-                demographic.NextStep = thankYou;
+                demographic.NextStep = softwareTypes;
+                softwareTypes.PreviousStep = demographic;
+                softwareTypes.NextStep = thankYou;
 
                 return new Steps(new List<Step>
                 {
                     start,
                     demographic,
+                    softwareTypes,
                     thankYou
                 });
             });
@@ -61,7 +69,8 @@ namespace SoftwareSurvey
                 Id = Guid.NewGuid().ToString(),
                 Year = DateTime.Now.Year,
                 CreatedTimestamp = DateTime.Now,
-                Demographic = new Demographic()
+                Demographic = new Demographic(),
+                SoftwareTypes = new SoftwareTypes()
             });
 
             services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();

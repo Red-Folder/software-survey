@@ -21,7 +21,7 @@ namespace SoftwareSurvey.Pages
             var task = _persistanceManager.Persist(_surveyResponse);
             task.ContinueWith(async x =>
             {
-                Error = x.Result;
+                Error = !x.Result;
                 Saved = true;
                 await InvokeAsync(StateHasChanged);
             });

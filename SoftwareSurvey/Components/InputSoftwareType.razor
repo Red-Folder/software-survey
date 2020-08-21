@@ -1,0 +1,15 @@
+﻿@inherits InputSoftwareTypeBase
+
+<span class="@CssClass">@Label</span>
+<InputRadio name="@Id" SelectedValue="0" @bind-Value="CurrentValue" />
+<span></span>
+<InputRadio name="@Id" SelectedValue="1" @bind-Value="CurrentValue" />
+<InputRadio name="@Id" SelectedValue="2" @bind-Value="CurrentValue" />
+<InputRadio name="@Id" SelectedValue="3" @bind-Value="CurrentValue" />
+<InputRadio name="@Id" SelectedValue="4" @bind-Value="CurrentValue" />
+<InputRadio name="@Id" SelectedValue="5" @bind-Value="CurrentValue" />
+
+@if (!String.IsNullOrEmpty(Description))
+{
+    <i class="software-type-description @CssClass">@Description</i>
+}

@@ -16,5 +16,8 @@ namespace SoftwareSurvey.Models
 
         [JsonProperty(PropertyName = "demographic")]
         public Demographic Demographic { get; set; }
+
+        [JsonProperty(PropertyName = "softwareTypes")]
+        public SoftwareTypes SoftwareTypes { get; set; }
     }
 }
