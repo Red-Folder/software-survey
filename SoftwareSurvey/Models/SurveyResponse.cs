@@ -19,5 +19,8 @@ namespace SoftwareSurvey.Models
 
         [JsonProperty(PropertyName = "softwareTypes")]
         public SoftwareTypes SoftwareTypes { get; set; }
+
+        [JsonProperty(PropertyName = "experiences")]
+        public Experiences Experiences { get; set; }
     }
 }

@@ -169,3 +169,44 @@ input[type='radio'] {
     font-weight: bold;
     font-style: italic;
 }
+
+
+.experiences {
+    display: grid;
+    grid-template-columns: 7fr 1fr 0.5fr repeat(5, 1fr);
+}
+
+    .experiences .header {
+        writing-mode: vertical-lr;
+        text-align: right;
+        padding-bottom: 0.5rem;
+    }
+
+    .experiences input {
+        justify-self: center;
+        align-self: center;
+    }
+
+.experience-description {
+    grid-column: span 8;
+    font-size: 0.75rem;
+}
+
+.experiences hr {
+    grid-column: span 8;
+    width: 100%;
+}
+
+.experiences .validation-message {
+    grid-column: span 8;
+}
+
+.experiences .valid, .experiences .valid.modified:not([type=checkbox]) {
+    outline: none;
+}
+
+.experiences .invalid {
+    outline: none;
+    color: red;
+}
+
