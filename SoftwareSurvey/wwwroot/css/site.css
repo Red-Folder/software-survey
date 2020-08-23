@@ -210,3 +210,11 @@ input[type='radio'] {
     color: red;
 }
 
+.contact-option-row {
+    display: grid;
+    grid-template-columns: auto calc(1.5em + .75rem + 2px);
+    align-items: center;
+
+    margin-bottom: 0.5rem;
+}
+

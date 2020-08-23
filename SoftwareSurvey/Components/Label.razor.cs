@@ -7,10 +7,10 @@ using System.ComponentModel;
 
 namespace SoftwareSurvey.Components
 {
-    public partial class Label
+    public partial class Label<TValue>
     {
         [Parameter] 
-        public Expression<Func<string>> For { get; set; }
+        public Expression<Func<TValue>> For { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public IDictionary<string, object> AdditionalAttributes { get; set; }

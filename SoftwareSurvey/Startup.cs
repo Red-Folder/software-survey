@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
-using System;
 using System.Collections.Generic;
 
 namespace SoftwareSurvey
@@ -54,6 +53,11 @@ namespace SoftwareSurvey
                     Path = "OneChange",
                     Name = "One Change"
                 };
+                var contact = new Step
+                {
+                    Path = "Contact",
+                    Name = "Contact"
+                };
                 var thankYou = new Step
                 {
                     Path = "ThankYou",
@@ -67,7 +71,9 @@ namespace SoftwareSurvey
                 experiences.PreviousStep = softwareTypes;
                 experiences.NextStep = oneChange;
                 oneChange.PreviousStep = experiences;
-                oneChange.NextStep = thankYou;
+                oneChange.NextStep = contact;
+                contact.PreviousStep = oneChange;
+                contact.NextStep = thankYou;
 
                 return new Steps(new List<Step>
                 {
@@ -76,20 +82,12 @@ namespace SoftwareSurvey
                     softwareTypes,
                     experiences,
                     oneChange,
+                    contact,
                     thankYou
                 });
             });
 
-            services.AddScoped(x => new SurveyResponse
-            {
-                Id = Guid.NewGuid().ToString(),
-                Year = DateTime.Now.Year,
-                CreatedTimestamp = DateTime.Now,
-                Demographic = new Demographic(),
-                SoftwareTypes = new SoftwareTypes(),
-                Experiences = new Experiences(),
-                OneChange = new OneChange()
-            });
+            services.AddScoped(x => new SurveyResponse());
 
             services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
             services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();

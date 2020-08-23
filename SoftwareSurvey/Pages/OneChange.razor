@@ -6,7 +6,6 @@
 
 <SurveyNavigation Model="@_model">
     <div class="form-group">
-        <Label For="@(() => _model.Text)" />
         <InputTextArea id="text" @bind-Value="@_model.Text" class="form-control" rows="5" />
     </div>
 </SurveyNavigation>

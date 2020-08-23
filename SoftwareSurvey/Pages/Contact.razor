@@ -1,0 +1,66 @@
+﻿@page "/Contact"
+
+<h1>CONTACT</h1>
+
+<p>Would you like to be contacted?</p>
+
+<SurveyNavigation Model="@_model" IsModelValid="@IsEmailValid">
+    <div class="contact-option-row">
+        <Label For="@(() => _model.SurveyResults)" />
+        <InputCheckbox id="survey-results" @bind-Value="_model.SurveyResults" class="form-control" />
+    </div>
+
+    <div class="contact-option-row">
+        <Label For="@(() => _model.FollowUpQuestions)" />
+        <InputCheckbox id="follow-up-questions" @bind-Value="_model.FollowUpQuestions" class="form-control" />
+    </div>
+
+    <div class="contact-option-row">
+        <Label For="@(() => _model.FurtherSurveys)" />
+        <InputCheckbox id="follow-up-questions" @bind-Value="_model.FurtherSurveys" class="form-control" />
+    </div>
+
+    @if (RequireEmailAddress)
+    {
+        <div class="form-group">
+            <Label For="@(() => _model.Email)" />
+            <InputText id="email" @bind-Value="_model.Email" class="form-control" />
+            <ValidationMessage For="@(() => _model.Email)" />
+            @if(!IsEmailValid())
+            {
+                <div class="validation-message">Please provided email</div>
+            }
+        </div>
+    }
+</SurveyNavigation>
+
+@code
+{
+    [Inject]
+    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private SoftwareSurvey.Models.Contact _model;
+
+    protected override void OnInitialized()
+    {
+        _model = _surveyResponse.Contact;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementById", "survey-results");
+        }
+    }
+
+    private bool RequireEmailAddress => _model.SurveyResults || _model.FollowUpQuestions || _model.FurtherSurveys;
+
+    private bool IsEmailValid()
+    {
+        return !RequireEmailAddress || !string.IsNullOrEmpty(_model.Email);
+    }
+}

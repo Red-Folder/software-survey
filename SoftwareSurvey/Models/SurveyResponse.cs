@@ -5,6 +5,18 @@ namespace SoftwareSurvey.Models
 {
     public class SurveyResponse
     {
+        public SurveyResponse()
+        {
+            Id = Guid.NewGuid().ToString();
+            Year = DateTime.Now.Year;
+            CreatedTimestamp = DateTime.Now;
+            Demographic = new Demographic();
+            SoftwareTypes = new SoftwareTypes();
+            Experiences = new Experiences();
+            OneChange = new OneChange();
+            Contact = new Contact();
+        }
+
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -25,5 +37,8 @@ namespace SoftwareSurvey.Models
 
         [JsonProperty(PropertyName = "oneChange")]
         public OneChange OneChange { get; set; }
+
+        [JsonProperty(PropertyName = "contact")]
+        public Contact Contact { get; set; }
     }
 }

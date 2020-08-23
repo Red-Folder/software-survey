@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
+using System;
 
 namespace SoftwareSurvey.Components
 {
@@ -12,6 +13,9 @@ namespace SoftwareSurvey.Components
 
         [Parameter]
         public IStateObject Model { get; set; }
+
+        [Parameter]
+        public Func<bool> IsModelValid { get; set; }
 
         [Inject]
         private ISurveyNavigationService _surveyNavigationService { get; set; }
@@ -26,7 +30,7 @@ namespace SoftwareSurvey.Components
             {
                 _editContext = new EditContext(Model);
             }
-       }
+        }
 
         private void HandleNext()
         {
@@ -52,7 +56,19 @@ namespace SoftwareSurvey.Components
             }
         }
 
-        private bool ShouldNotChangePageDueToInvalidModel => HasModel && !_editContext.Validate();
+        private bool ShouldNotChangePageDueToInvalidModel
+        {
+            get
+            {
+                if (!HasModel) return false;
+
+                if (!_editContext.Validate()) return true;
+
+                if (IsModelValid != null && !IsModelValid()) return true;
+
+                return false;
+            }
+        }
         private bool HasNext => _surveyNavigationService.HasNext;
         private bool HasPrevious => _surveyNavigationService.HasPrevious;
     }
