@@ -8,5 +8,7 @@ namespace SoftwareSurvey.Models
         public bool HasPrevious(string currentPath);
         public string NextPath(string currentPath);
         public string PreviousPath(string currentPath);
+
+        public string CurrentPathTitle(string currentPath);
     }
 }

@@ -33,6 +33,12 @@ namespace SoftwareSurvey.Services
             }
         }
 
+        public string CurrentPageTitle()
+        {
+            var currentPath = _navigationManager.CurrentPath;
+            return _steps.CurrentPathTitle(currentPath);
+        }
+
         public bool HasNext => _steps.HasNext(_navigationManager.CurrentPath);
         public bool HasPrevious => _steps.HasPrevious(_navigationManager.CurrentPath);
     }

@@ -15,22 +15,22 @@ namespace SoftwareSurvey.UnitTests.Models
             var start = new Step
             {
                 Path = "",
-                Name = "Start"
+                PageTitle = "Start"
             };
             var step1 = new Step
             {
                 Path = "Step1",
-                Name = "Step 1"
+                PageTitle = "Step 1"
             };
             var step2 = new Step
             {
                 Path = "Step2",
-                Name = "Step 2"
+                PageTitle = "Step 2"
             };
             var end = new Step
             {
                 Path = "End",
-                Name = "End"
+                PageTitle = "End"
             };
             start.NextStep = step1;
             step1.PreviousStep = start;

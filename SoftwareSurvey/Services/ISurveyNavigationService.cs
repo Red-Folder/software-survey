@@ -7,5 +7,7 @@
 
         void HandleNext();
         void HandlePrevious();
+
+        string CurrentPageTitle();
     }
 }

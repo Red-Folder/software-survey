@@ -1,75 +1,75 @@
 ﻿@page "/Experiences"
 
-<h1>YOUR EXPERIENCES</h1>
+    <Navigation />
 
-<p>How happy are you with the below when it comes to your custom Software Development?</p>
+    <p>How happy are you with the below when it comes to your custom Software Development?</p>
 
-<SurveyNavigation Model="@_model">
-    <div class="experiences">
-        <span class="header"></span>
-        <span class="header">Don't know</span>
-        <span class="header"></span>
-        <span class="header">(Not) 1</span>
-        <span class="header">2</span>
-        <span class="header">3</span>
-        <span class="header">4</span>
-        <span class="header">(Very) 5</span>
+    <SurveyNavigation Model="@_model">
+        <div class="experiences">
+            <span class="header"></span>
+            <span class="header">Don't know</span>
+            <span class="header"></span>
+            <span class="header">(Not) 1</span>
+            <span class="header">2</span>
+            <span class="header">3</span>
+            <span class="header">4</span>
+            <span class="header">(Very) 5</span>
 
-        <hr />
+            <hr />
 
-        <InputExperience Id="return-on-investment"
-                         Label="ROI"
-                         @bind-Value="_model.ReturnOnInvestment"
-                         Description="Is it providing Return On Investment?" />
-        <ValidationMessage For="@(() => _model.ReturnOnInvestment)" />
-        <hr />
+            <InputExperience Id="return-on-investment"
+                             Label="ROI"
+                             @bind-Value="_model.ReturnOnInvestment"
+                             Description="Is it providing Return On Investment?" />
+            <ValidationMessage For="@(() => _model.ReturnOnInvestment)" />
+            <hr />
 
-        <InputExperience Id="keeping-pace"
-                         Label="Keeping pace"
-                         @bind-Value="_model.KeepingPace"
-                         Description="Is it keeping pace with the business needs?" />
-        <ValidationMessage For="@(() => _model.KeepingPace)" />
-        <hr />
+            <InputExperience Id="keeping-pace"
+                             Label="Keeping pace"
+                             @bind-Value="_model.KeepingPace"
+                             Description="Is it keeping pace with the business needs?" />
+            <ValidationMessage For="@(() => _model.KeepingPace)" />
+            <hr />
 
-        <InputExperience Id="recruitment"
-                         Label="Recruitment"
-                         @bind-Value="_model.Recruitment"
-                         Description="It is easy to recruit the developers you want?" />
-        <ValidationMessage For="@(() => _model.Recruitment)" />
-        <hr />
+            <InputExperience Id="recruitment"
+                             Label="Recruitment"
+                             @bind-Value="_model.Recruitment"
+                             Description="It is easy to recruit the developers you want?" />
+            <ValidationMessage For="@(() => _model.Recruitment)" />
+            <hr />
 
-        <InputExperience Id="retention"
-                         Label="Retention"
-                         @bind-Value="_model.Retention"
-                         Description="Is it easy to retain your developers?" />
-        <ValidationMessage For="@(() => _model.Retention)" />
-        <hr />
+            <InputExperience Id="retention"
+                             Label="Retention"
+                             @bind-Value="_model.Retention"
+                             Description="Is it easy to retain your developers?" />
+            <ValidationMessage For="@(() => _model.Retention)" />
+            <hr />
 
-        <InputExperience Id="quality"
-                         Label="Quality"
-                         @bind-Value="_model.Quality"
-                         Description="Is the software of a high quality?" />
-        <ValidationMessage For="@(() => _model.Quality)" />
-        <hr />
+            <InputExperience Id="quality"
+                             Label="Quality"
+                             @bind-Value="_model.Quality"
+                             Description="Is the software of a high quality?" />
+            <ValidationMessage For="@(() => _model.Quality)" />
+            <hr />
 
-        <InputExperience Id="predicatability"
-                         Label="Predicability"
-                         @bind-Value="_model.Predicability"
-                         Description="Is the software development predicatable?" />
-        <ValidationMessage For="@(() => _model.Predicability)" />
-        <hr />
-    </div>
-</SurveyNavigation>
+            <InputExperience Id="predicatability"
+                             Label="Predicability"
+                             @bind-Value="_model.Predicability"
+                             Description="Is the software development predicatable?" />
+            <ValidationMessage For="@(() => _model.Predicability)" />
+            <hr />
+        </div>
+    </SurveyNavigation>
 
-@code
+    @code
 {
-    [Inject]
-    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+        [Inject]
+        private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
-    private SoftwareSurvey.Models.Experiences _model;
+        private SoftwareSurvey.Models.Experiences _model;
 
-    protected override void OnInitialized()
-    {
-        _model = _surveyResponse.Experiences;
+        protected override void OnInitialized()
+        {
+            _model = _surveyResponse.Experiences;
+        }
     }
-}

@@ -1,0 +1,13 @@
+﻿<h1>@PageTitle</h1>
+
+@code {
+    [Inject]
+    public SoftwareSurvey.Services.ISurveyNavigationService _surveyNavigationService { get; set; }
+
+    private string PageTitle { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PageTitle = _surveyNavigationService.CurrentPageTitle();
+    }
+}
