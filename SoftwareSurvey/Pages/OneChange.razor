@@ -1,0 +1,36 @@
+﻿@page "/OneChange"
+
+<h1>ONE CHANGE</h1>
+
+<p>What is the one thing you'd change about your custom Software Development?  (Optional)</p>
+
+<SurveyNavigation Model="@_model">
+    <div class="form-group">
+        <Label For="@(() => _model.Text)" />
+        <InputTextArea id="text" @bind-Value="@_model.Text" class="form-control" rows="5" />
+    </div>
+</SurveyNavigation>
+
+@code
+{
+    [Inject]
+    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private SoftwareSurvey.Models.OneChange _model;
+
+    protected override void OnInitialized()
+    {
+        _model = _surveyResponse.OneChange;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementById", "text");
+        }
+    }
+}

@@ -49,6 +49,11 @@ namespace SoftwareSurvey
                     Path = "Experiences",
                     Name = "Your Experiences"
                 };
+                var oneChange = new Step
+                {
+                    Path = "OneChange",
+                    Name = "One Change"
+                };
                 var thankYou = new Step
                 {
                     Path = "ThankYou",
@@ -60,7 +65,9 @@ namespace SoftwareSurvey
                 softwareTypes.PreviousStep = demographic;
                 softwareTypes.NextStep = experiences;
                 experiences.PreviousStep = softwareTypes;
-                experiences.NextStep = thankYou;
+                experiences.NextStep = oneChange;
+                oneChange.PreviousStep = experiences;
+                oneChange.NextStep = thankYou;
 
                 return new Steps(new List<Step>
                 {
@@ -68,6 +75,7 @@ namespace SoftwareSurvey
                     demographic,
                     softwareTypes,
                     experiences,
+                    oneChange,
                     thankYou
                 });
             });
@@ -79,7 +87,8 @@ namespace SoftwareSurvey
                 CreatedTimestamp = DateTime.Now,
                 Demographic = new Demographic(),
                 SoftwareTypes = new SoftwareTypes(),
-                Experiences = new Experiences()
+                Experiences = new Experiences(),
+                OneChange = new OneChange()
             });
 
             services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();

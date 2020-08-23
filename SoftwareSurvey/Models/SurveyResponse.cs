@@ -22,5 +22,8 @@ namespace SoftwareSurvey.Models
 
         [JsonProperty(PropertyName = "experiences")]
         public Experiences Experiences { get; set; }
+
+        [JsonProperty(PropertyName = "oneChange")]
+        public OneChange OneChange { get; set; }
     }
 }
