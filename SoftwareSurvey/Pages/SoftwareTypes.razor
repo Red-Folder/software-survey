@@ -20,43 +20,43 @@
             <InputSoftwareType Id="ecommerce"
                                Label="eCommerce"
                                @bind-Value="_model.ECommerce"
-                               Description="Website(s) selling products or services" />
-            <ValidationMessage For="@(() => _model.ECommerce)" />
+                               Description="Website(s) selling products or services"
+                               ValidationFor="@(() => _model.ECommerce)" />
             <hr />
 
             <InputSoftwareType Id="information-website"
                                Label="Information Website"
                                @bind-Value="_model.InformatitonWebsite"
-                               Description="Website(s) providing information (portfolio, blog, etc)" />
-            <ValidationMessage For="@(() => _model.InformatitonWebsite)" />
+                               Description="Website(s) providing information (portfolio, blog, etc)" 
+                               ValidationFor="@(() => _model.InformatitonWebsite)"/>
             <hr />
 
             <InputSoftwareType Id="mobile-app"
                                Label="Mobile App"
                                @bind-Value="_model.MobileApps"
-                               Description="Application(s) for install on mobile or tablet" />
-            <ValidationMessage For="@(() => _model.MobileApps)" />
+                               Description="Application(s) for install on mobile or tablet"
+                               ValidationFor="@(() => _model.MobileApps)"/>
             <hr />
 
             <InputSoftwareType Id="line-of-business"
                                Label="Line Of Business"
                                @bind-Value="_model.LineOfBusiness"
-                               Description="Application(s) to support specific business process" />
-            <ValidationMessage For="@(() => _model.LineOfBusiness)" />
+                               Description="Application(s) to support specific business process"
+                               ValidationFor="@(() => _model.LineOfBusiness)"/>
             <hr />
 
             <InputSoftwareType Id="software-as-a-service"
                                Label="SaaS"
                                @bind-Value="_model.SoftwareAsAService"
-                               Description="Software as a Service - sold as a product (normally subscription)" />
-            <ValidationMessage For="@(() => _model.SoftwareAsAService)" />
+                               Description="Software as a Service - sold as a product (normally subscription)"
+                               ValidationFor="@(() => _model.SoftwareAsAService)"/>
             <hr />
 
             <InputSoftwareType Id="other"
                                Label="Other"
                                @bind-Value="_model.Other"
-                               Description="Any other type of software not listed above" />
-            <ValidationMessage For="@(() => _model.Other)" />
+                               Description="Any other type of software not listed above"
+                               ValidationFor="@(() => _model.Other)"/>
             <hr />
         </div>
     </SurveyNavigation>

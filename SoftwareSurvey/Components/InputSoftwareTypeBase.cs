@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System;
+using System.Linq.Expressions;
 
 namespace SoftwareSurvey.Components
 {
@@ -11,6 +13,8 @@ namespace SoftwareSurvey.Components
         public string Id { get; set; }
         [Parameter]
         public string Description { get; set; }
+        [Parameter]
+        public Expression<Func<object>>? ValidationFor { get; set; }
 
         protected override bool TryParseValueFromString(string value, out int? result, out string validationErrorMessage)
         {

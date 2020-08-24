@@ -13,3 +13,9 @@
 {
     <i class="software-type-description @CssClass">@Description</i>
 }
+
+@if (ValidationFor != null)
+{
+    <ValidationMessage For="@(ValidationFor)" />
+}
+
