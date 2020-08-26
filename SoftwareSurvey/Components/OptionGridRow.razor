@@ -1,0 +1,59 @@
+﻿<span>@Label</span>
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 0)"
+       @onchange="(() => Value = 0)" />
+<span></span>
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 1)"
+       @onchange="(() => Value = 1)" />
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 2)"
+       @onchange="(() => Value = 2)" />
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 3)"
+       @onchange="(() => Value = 3)" />
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 4)"
+       @onchange="(() => Value = 4)" />
+<input type="radio"
+       name="@Id"
+       checked="@(Value == 5)"
+       @onchange="(() => Value = 5)" />
+
+<i class="option-grid-row-description">@Description</i>
+
+<ValidationMessage For="@For" />
+<hr />
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+    [Parameter]
+    public string Label { get; set; }
+    [Parameter]
+    public string Description { get; set; }
+    [Parameter]
+    public Action<int?> ValueSetter { get; set; }
+    [Parameter]
+    public Func<int?> ValueGetter { get; set; }
+    [Parameter]
+    public System.Linq.Expressions.Expression<Func<object>> For { get; set; }
+
+    public int? Value
+    {
+        get
+        {
+            return ValueGetter();
+        }
+        set
+        {
+            ValueSetter(value);
+        }
+    }
+}

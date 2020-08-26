@@ -1,75 +1,22 @@
 ﻿@page "/SoftwareTypes"
 
-    <Navigation />
+<Navigation />
 
-    <p>Which types of custom software do you use, and how critical are they to your organisation?</p>
+<p>Which types of custom software do you use, and how critical are they to your organisation?</p>
 
-    <SurveyNavigation Model="@_model">
-        <div class="software-types">
-            <span class="header"></span>
-            <span class="header">Don't use</span>
-            <span class="header"></span>
-            <span class="header">(Not) 1</span>
-            <span class="header">2</span>
-            <span class="header">3</span>
-            <span class="header">4</span>
-            <span class="header">(Very) 5</span>
+<SurveyNavigation Model="@_model">
+    <OptionGrid Model="@_model" NotApplicableLabel="Don't use" />
+</SurveyNavigation>
 
-            <hr />
-
-            <InputSoftwareType Id="ecommerce"
-                               Label="eCommerce"
-                               @bind-Value="_model.ECommerce"
-                               Description="Website(s) selling products or services"
-                               ValidationFor="@(() => _model.ECommerce)" />
-            <hr />
-
-            <InputSoftwareType Id="information-website"
-                               Label="Information Website"
-                               @bind-Value="_model.InformatitonWebsite"
-                               Description="Website(s) providing information (portfolio, blog, etc)" 
-                               ValidationFor="@(() => _model.InformatitonWebsite)"/>
-            <hr />
-
-            <InputSoftwareType Id="mobile-app"
-                               Label="Mobile App"
-                               @bind-Value="_model.MobileApps"
-                               Description="Application(s) for install on mobile or tablet"
-                               ValidationFor="@(() => _model.MobileApps)"/>
-            <hr />
-
-            <InputSoftwareType Id="line-of-business"
-                               Label="Line Of Business"
-                               @bind-Value="_model.LineOfBusiness"
-                               Description="Application(s) to support specific business process"
-                               ValidationFor="@(() => _model.LineOfBusiness)"/>
-            <hr />
-
-            <InputSoftwareType Id="software-as-a-service"
-                               Label="SaaS"
-                               @bind-Value="_model.SoftwareAsAService"
-                               Description="Software as a Service - sold as a product (normally subscription)"
-                               ValidationFor="@(() => _model.SoftwareAsAService)"/>
-            <hr />
-
-            <InputSoftwareType Id="other"
-                               Label="Other"
-                               @bind-Value="_model.Other"
-                               Description="Any other type of software not listed above"
-                               ValidationFor="@(() => _model.Other)"/>
-            <hr />
-        </div>
-    </SurveyNavigation>
-
-    @code
+@code
 {
-        [Inject]
-        private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    [Inject]
+    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
-        private SoftwareSurvey.Models.SoftwareTypes _model;
+    private SoftwareSurvey.Models.SoftwareTypes _model;
 
-        protected override void OnInitialized()
-        {
-            _model = _surveyResponse.SoftwareTypes;
-        }
+    protected override void OnInitialized()
+    {
+        _model = _surveyResponse.SoftwareTypes;
     }
+}

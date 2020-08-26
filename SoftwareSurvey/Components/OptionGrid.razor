@@ -1,0 +1,25 @@
+﻿@typeparam TValue
+
+<div class="option-grid">
+    <span class="header"></span>
+    <span class="header">@NotApplicableLabel</span>
+    <span class="header"></span>
+    <span class="header">(Not) 1</span>
+    <span class="header">2</span>
+    <span class="header">3</span>
+    <span class="header">4</span>
+    <span class="header">(Very) 5</span>
+
+    <hr />
+
+    @foreach (var option in _options)
+    {
+        <OptionGridRow @key="option"
+                       Id="@option.Id"
+                       Label="@option.Label"
+                       Description="@option.Description"
+                       ValueGetter="@option.ValueGetter"
+                       ValueSetter="@option.ValueSetter"
+                       For="@option.For" />
+    }
+</div>

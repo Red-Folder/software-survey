@@ -31,6 +31,9 @@ body {
 
 .validation-message {
     color: red;
+    font-size: 0.75rem;
+    font-weight: bold;
+    font-style: italic;
 }
 
 #blazor-error-ui {
@@ -126,88 +129,43 @@ input[type='radio'] {
     transform: scale(1.5);
 }
 
-.software-types {
+.option-grid {
     display: grid;
     grid-template-columns: 7fr 1fr 0.5fr repeat(5, 1fr);
 }
 
-.software-types .header {
+.option-grid .header {
     writing-mode: vertical-lr;
     text-align: right;
     padding-bottom: 0.5rem;
 }
 
-.software-types input {
+.option-grid input {
     justify-self: center;
     align-self: center;
 }
 
-.software-type-description {
-    grid-column: span 8;
-    font-size: 0.75rem;
-}
-
-.software-types hr {
+.option-grid hr {
     grid-column: span 8;
     width: 100%;
 }
 
-.software-types .validation-message {
+.option-grid .validation-message {
     grid-column: span 8;
 }
 
-.software-types .valid, .software-types .valid.modified:not([type=checkbox]) {
-    outline: none;
-}
-.software-types .invalid {
-    outline: none;
-    color: red;
-}
-
-.validation-message {
-    font-size: 0.75rem;
-    font-weight: bold;
-    font-style: italic;
-}
-
-
-.experiences {
-    display: grid;
-    grid-template-columns: 7fr 1fr 0.5fr repeat(5, 1fr);
-}
-
-    .experiences .header {
-        writing-mode: vertical-lr;
-        text-align: right;
-        padding-bottom: 0.5rem;
-    }
-
-    .experiences input {
-        justify-self: center;
-        align-self: center;
-    }
-
-.experience-description {
-    grid-column: span 8;
-    font-size: 0.75rem;
-}
-
-.experiences hr {
-    grid-column: span 8;
-    width: 100%;
-}
-
-.experiences .validation-message {
-    grid-column: span 8;
-}
-
-.experiences .valid, .experiences .valid.modified:not([type=checkbox]) {
+.option-grid .valid, .option-grid .valid.modified:not([type=checkbox]) {
     outline: none;
 }
 
-.experiences .invalid {
+.option-grid .invalid {
     outline: none;
     color: red;
+}
+
+.option-grid-row-description {
+    grid-column: span 8;
+    font-size: 0.75rem;
 }
 
 .contact-option-row {
