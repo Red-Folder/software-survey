@@ -19,5 +19,10 @@ namespace SoftwareSurvey.Models
         [DisplayName("Job Title (optional)")]
         [JsonProperty(PropertyName = "jobTitle")]
         public string JobTitle { get; set; }
+
+        [Required(ErrorMessage = "Please provide if your business is UK Based")]
+        [DisplayName("Is your business UK based?")]
+        [JsonProperty(PropertyName = "ukBased")]
+        public string UKBased { get; set; }
     }
 }

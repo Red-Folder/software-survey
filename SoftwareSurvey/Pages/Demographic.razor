@@ -39,6 +39,18 @@
         <Label For="@(() => _model.JobTitle)" />
         <InputText id="job-title" @bind-Value="@_model.JobTitle" class="form-control" />
     </div>
+
+    <div class="form-group">
+        <Label For="@(() => _model.UKBased)" />
+        <InputSelect id="uk-based" @bind-Value="@_model.UKBased" class="form-control">
+            <option value="">Please select</option>
+            <option value="Fully">Fully</option>
+            <option value="Mostly">Mostly</option>
+            <option value="Partially">Partially</option>
+            <option value="Not at all">Not at all</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => _model.UKBased)" />
+    </div>
 </SurveyNavigation>
 
 @code
