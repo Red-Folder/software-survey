@@ -7,8 +7,10 @@
     {
         if (Error)
         {
-            <h1 class="temporary-header">TODO</h1>
-            <p>Do something on error.  Allow a retry?</p>
+            <h1 class="temporary-header">SORRY</h1>
+            <p>An error has occurred while trying to save your details.</p>
+            <p>Please press the button below to retry:</p>
+            <button type="submit" class="btn retry-button" @onclick="HandleRetry">Retry</button>
         }
         else
         {

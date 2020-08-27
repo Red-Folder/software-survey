@@ -211,12 +211,16 @@ input[type='radio'] {
     }
 }
 
-h1 {
+.temporary-header {
     font-weight: bold;
     font-size: 1.5rem;
     background-color: var(--main-colour);
     color: var(--accent2-colour);
     padding: 0.5rem;
     text-align: center;
-    margin-bottom: 0px;
+    margin-bottom: 1rem;
+}
+
+.retry-button {
+    width: 100%;
 }
