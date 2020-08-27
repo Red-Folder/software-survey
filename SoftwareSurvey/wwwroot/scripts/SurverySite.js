@@ -1,15 +1,25 @@
 ﻿window.SurveySite = window.SurveySite || {};
 
 window.SurveySite.focusElementById = function (id) {
-    var element = document.getElementById(id);
-    if (element) {
-        element.focus();
+    try {
+        var element = document.getElementById(id);
+        if (element) {
+            element.focus();
+        }
+    }
+    catch (err) {
+        appInsights.trackException(err);
     }
 };
 
 window.SurveySite.focusElementByName = function (name) {
-    var element = document.getElementsByName(name);
-    if (element) {
-        element[0].focus();
+    try {
+        var element = document.getElementsByName(name);
+        if (element) {
+            element[0].focus();
+        }
+    }
+    catch (err) {
+        appInsights.trackException(err);
     }
 };
