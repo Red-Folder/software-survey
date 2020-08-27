@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SoftwareSurvey.Models
@@ -12,7 +13,7 @@ namespace SoftwareSurvey.Models
             _steps = steps;
         }
 
-        public string CurrentPathTitle(string currentPath) => FromCurrentPath(currentPath)?.PageTitle ?? "Unknown";
+        public string PathTitle(string currentPath) => FromCurrentPath(currentPath)?.PageTitle ?? "Unknown";
 
         public bool HasNext(string currentPath) =>  NextPath(currentPath) != null;
 
@@ -23,5 +24,25 @@ namespace SoftwareSurvey.Models
         public string PreviousPath(string currentPath) => FromCurrentPath(currentPath)?.PreviousStep?.Path;
 
         private Step FromCurrentPath(string currentPath) => _steps.FirstOrDefault(x => x.Path == currentPath);
+
+        public int StepNumber(string currentPath)
+        {
+            var step = FromCurrentPath(currentPath);
+            return _steps.IndexOf(step) + 1;
+        }
+
+        public int StepCount()
+        {
+            return _steps.Count;
+        }
+
+        public ReadOnlyCollection<NavigationSummary> NavigationSummaries(string currentPath)
+        {
+            return _steps.Select(x => new NavigationSummary
+            {
+                PageTitle = x.PageTitle,
+                IsCurrent = x.Path == currentPath
+            }).ToList().AsReadOnly();
+        }
     }
 }

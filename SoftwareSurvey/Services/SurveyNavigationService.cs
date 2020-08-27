@@ -1,4 +1,5 @@
 ﻿using SoftwareSurvey.Models;
+using System.Collections.ObjectModel;
 
 namespace SoftwareSurvey.Services
 {
@@ -33,13 +34,22 @@ namespace SoftwareSurvey.Services
             }
         }
 
-        public string CurrentPageTitle()
+        public string CurrentPageTitle
         {
-            var currentPath = _navigationManager.CurrentPath;
-            return _steps.CurrentPathTitle(currentPath);
+            get
+            {
+                var currentPath = _navigationManager.CurrentPath;
+                return _steps.PathTitle(currentPath);
+            }
         }
 
         public bool HasNext => _steps.HasNext(_navigationManager.CurrentPath);
         public bool HasPrevious => _steps.HasPrevious(_navigationManager.CurrentPath);
+
+        public int CurrentPageNumber => _steps.StepNumber(_navigationManager.CurrentPath);
+
+        public int PageCount => _steps.StepCount();
+
+        public ReadOnlyCollection<NavigationSummary> NavigationSummaries => _steps.NavigationSummaries(_navigationManager.CurrentPath);
     }
 }

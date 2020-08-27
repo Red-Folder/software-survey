@@ -1,13 +1,35 @@
-﻿<h1>@PageTitle</h1>
+﻿<h1>@_pageTitle</h1>
+<p class="navigation-hint navigation-hint-short">Page @_currentPageNo of @_pageCount </p>
+<p class="navigation-hint navigation-hint-full">
+    @foreach (var navigationSummary in _navigationSummaries)
+    {
+        <span @key="navigationSummary">
+            @if (_navigationSummaries.IndexOf(navigationSummary) > 0)
+            {
+                <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+            }
+
+            <span class="@(navigationSummary.IsCurrent ? "current" : "")">
+                @navigationSummary.PageTitle
+            </span>
+        </span>
+    }
+</p>
 
 @code {
     [Inject]
     public SoftwareSurvey.Services.ISurveyNavigationService _surveyNavigationService { get; set; }
 
-    private string PageTitle { get; set; }
+    private string _pageTitle;
+    private int _currentPageNo;
+    private int _pageCount;
+    private System.Collections.ObjectModel.ReadOnlyCollection<SoftwareSurvey.Models.NavigationSummary> _navigationSummaries;
 
     protected override void OnInitialized()
     {
-        PageTitle = _surveyNavigationService.CurrentPageTitle();
+        _pageTitle = _surveyNavigationService.CurrentPageTitle;
+        _currentPageNo = _surveyNavigationService.CurrentPageNumber;
+        _pageCount = _surveyNavigationService.PageCount;
+        _navigationSummaries = _surveyNavigationService.NavigationSummaries;
     }
 }

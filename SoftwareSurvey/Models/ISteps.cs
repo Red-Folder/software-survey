@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Collections.ObjectModel;
 
 namespace SoftwareSurvey.Models
 {
@@ -9,6 +9,9 @@ namespace SoftwareSurvey.Models
         public string NextPath(string currentPath);
         public string PreviousPath(string currentPath);
 
-        public string CurrentPathTitle(string currentPath);
+        public string PathTitle(string currentPath);
+        int StepNumber(string currentPath);
+        int StepCount();
+        public ReadOnlyCollection<NavigationSummary> NavigationSummaries(string currentPath);
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace SoftwareSurvey.Services
+﻿using SoftwareSurvey.Models;
+using System.Collections.ObjectModel;
+
+namespace SoftwareSurvey.Services
 {
     public interface ISurveyNavigationService
     {
@@ -8,6 +11,11 @@
         void HandleNext();
         void HandlePrevious();
 
-        string CurrentPageTitle();
+        string CurrentPageTitle { get; }
+
+        int CurrentPageNumber { get; }
+        int PageCount { get; }
+
+        ReadOnlyCollection<NavigationSummary> NavigationSummaries { get; }
     }
 }

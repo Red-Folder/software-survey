@@ -103,6 +103,7 @@ h1 {
     color: var(--accent2-colour);
     padding: 0.5rem;
     text-align: center;
+    margin-bottom: 0px;
 }
 
 h2 {
@@ -176,3 +177,19 @@ input[type='radio'] {
     margin-bottom: 0.5rem;
 }
 
+.navigation-hint {
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--accent1-colour);
+}
+
+    .navigation-hint .current {
+        font-weight: bold;
+    }
+
+.navigation-hint-full {
+    display: none;
+}
+
+@media only screen and (min-width: 321px) {
+}
