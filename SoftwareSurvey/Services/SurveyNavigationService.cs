@@ -49,7 +49,5 @@ namespace SoftwareSurvey.Services
         public int CurrentPageNumber => _steps.StepNumber(_navigationManager.CurrentPath);
 
         public int PageCount => _steps.StepCount();
-
-        public ReadOnlyCollection<NavigationSummary> NavigationSummaries => _steps.NavigationSummaries(_navigationManager.CurrentPath);
     }
 }

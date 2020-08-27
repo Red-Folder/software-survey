@@ -15,7 +15,5 @@ namespace SoftwareSurvey.Services
 
         int CurrentPageNumber { get; }
         int PageCount { get; }
-
-        ReadOnlyCollection<NavigationSummary> NavigationSummaries { get; }
     }
 }

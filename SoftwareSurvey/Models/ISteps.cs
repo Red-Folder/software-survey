@@ -12,6 +12,5 @@ namespace SoftwareSurvey.Models
         public string PathTitle(string currentPath);
         int StepNumber(string currentPath);
         int StepCount();
-        public ReadOnlyCollection<NavigationSummary> NavigationSummaries(string currentPath);
     }
 }

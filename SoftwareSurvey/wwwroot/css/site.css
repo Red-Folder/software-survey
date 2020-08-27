@@ -9,7 +9,7 @@ html, body {
 body {
     background-color: lightgrey;
     width: 100%;
-    max-width: 320px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -48,18 +48,18 @@ body {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 .navigation-buttons {
     margin: 0px;
 }
 
-.btn  {
+.btn {
     color: var(--accent2-colour);
     background-color: var(--accent1-colour);
     border-color: black;
@@ -96,16 +96,6 @@ header, footer {
     padding-bottom: 0.5rem;
 }
 
-h1 {
-    font-weight: bold;
-    font-size: 1.5rem;
-    background-color: var(--main-colour);
-    color: var(--accent2-colour);
-    padding: 0.5rem;
-    text-align: center;
-    margin-bottom: 0px;
-}
-
 h2 {
     font-size: 1.2rem;
     font-weight: bold;
@@ -135,34 +125,34 @@ input[type='radio'] {
     grid-template-columns: 7fr 1fr 0.5fr repeat(5, 1fr);
 }
 
-.option-grid .header {
-    writing-mode: vertical-lr;
-    text-align: right;
-    padding-bottom: 0.5rem;
-}
+    .option-grid .header {
+        writing-mode: vertical-lr;
+        text-align: right;
+        padding-bottom: 0.5rem;
+    }
 
-.option-grid input {
-    justify-self: center;
-    align-self: center;
-}
+    .option-grid input {
+        justify-self: center;
+        align-self: center;
+    }
 
-.option-grid hr {
-    grid-column: span 8;
-    width: 100%;
-}
+    .option-grid hr {
+        grid-column: span 8;
+        width: 100%;
+    }
 
-.option-grid .validation-message {
-    grid-column: span 8;
-}
+    .option-grid .validation-message {
+        grid-column: span 8;
+    }
 
-.option-grid .valid, .option-grid .valid.modified:not([type=checkbox]) {
-    outline: none;
-}
+    .option-grid .valid, .option-grid .valid.modified:not([type=checkbox]) {
+        outline: none;
+    }
 
-.option-grid .invalid {
-    outline: none;
-    color: red;
-}
+    .option-grid .invalid {
+        outline: none;
+        color: red;
+    }
 
 .option-grid-row-description {
     grid-column: span 8;
@@ -173,23 +163,60 @@ input[type='radio'] {
     display: grid;
     grid-template-columns: auto calc(1.5em + .75rem + 2px);
     align-items: center;
-
     margin-bottom: 0.5rem;
 }
 
-.navigation-hint {
-    font-size: 0.75rem;
+.navigation {
+    background-color: var(--main-colour);
+    color: var(--accent2-colour);
     text-align: center;
-    color: var(--accent1-colour);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-    .navigation-hint .current {
+    .navigation h1 {
         font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 0px;
     }
 
-.navigation-hint-full {
-    display: none;
-}
+    .navigation .hint-short {
+        font-size: 0.75rem;
+        margin-bottom: 0px;
+    }
+
+        .navigation .hint-short .current {
+            font-weight: bold;
+        }
+
+    .navigation .hint-full {
+        display: none;
+        font-size: 0.5rem;
+        margin-bottom: 0px;
+    }
+
+        .navigation .hint-full .current {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
 
 @media only screen and (min-width: 321px) {
+    .navigation .hint-short {
+        display: none;
+    }
+
+    .navigation .hint-full {
+        display: block;
+    }
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: var(--main-colour);
+    color: var(--accent2-colour);
+    padding: 0.5rem;
+    text-align: center;
+    margin-bottom: 0px;
 }

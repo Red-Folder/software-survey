@@ -35,14 +35,5 @@ namespace SoftwareSurvey.Models
         {
             return _steps.Count;
         }
-
-        public ReadOnlyCollection<NavigationSummary> NavigationSummaries(string currentPath)
-        {
-            return _steps.Select(x => new NavigationSummary
-            {
-                PageTitle = x.PageTitle,
-                IsCurrent = x.Path == currentPath
-            }).ToList().AsReadOnly();
-        }
     }
 }
