@@ -13,10 +13,21 @@
     [Inject]
     private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
     private SoftwareSurvey.Models.Experiences _model;
 
     protected override void OnInitialized()
     {
         _model = _surveyResponse.Experiences;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementByName", "return-on-investment");
+        }
     }
 }

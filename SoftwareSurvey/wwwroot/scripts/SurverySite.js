@@ -6,3 +6,10 @@ window.SurveySite.focusElementById = function (id) {
         element.focus();
     }
 };
+
+window.SurveySite.focusElementByName = function (name) {
+    var element = document.getElementsByName(name);
+    if (element) {
+        element[0].focus();
+    }
+};
