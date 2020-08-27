@@ -8,3 +8,14 @@
     <p>If so, please add your voice to this short 5 step survey.</p>
     <p>Responses will be used to produce a report of UK Executive's attitude towards custom Software Development.</p>
 </SurveyNavigation>
+
+@code
+{
+    [Inject]
+    public SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _surveyResponse.HasBeenToStart = true;
+    }
+}

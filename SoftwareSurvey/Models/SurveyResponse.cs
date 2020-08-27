@@ -10,6 +10,8 @@ namespace SoftwareSurvey.Models
             Id = Guid.NewGuid().ToString();
             Year = DateTime.Now.Year;
             CreatedTimestamp = DateTime.Now;
+            HasBeenToStart = false;
+
             Demographic = new Demographic();
             SoftwareTypes = new SoftwareTypes();
             Experiences = new Experiences();
@@ -25,6 +27,9 @@ namespace SoftwareSurvey.Models
 
         [JsonProperty(PropertyName = "createdTimestamp")]
         public DateTime CreatedTimestamp { get; set; }
+
+        [JsonIgnore]
+        public bool HasBeenToStart { get; set; }
 
         [JsonProperty(PropertyName = "demographic")]
         public Demographic Demographic { get; set; }

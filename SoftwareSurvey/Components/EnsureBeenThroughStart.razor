@@ -1,0 +1,21 @@
+﻿@code {
+    [Inject]
+    public SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+
+    [Inject]
+    public SoftwareSurvey.Services.INavigationManagerWrapper NavigationManager { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (NavigationManager.CurrentPath != "")
+            {
+                if (!_surveyResponse.HasBeenToStart)
+                {
+                    NavigationManager.NavigateTo("");
+                }
+            }
+        }
+    }
+}
