@@ -31,6 +31,13 @@ namespace SoftwareSurvey.Models
         [JsonIgnore]
         public bool HasBeenToStart { get; set; }
 
+        [JsonProperty(PropertyName = "isTest")]
+        public bool IsTest { get; set; }
+        [JsonProperty(PropertyName = "connectionIpAddress")]
+        public string ConnectionIpAddress { get; set; }
+        [JsonProperty(PropertyName = "forwardedIpAddress")]
+        public string ForwardedIpAddress { get; set; }
+
         [JsonProperty(PropertyName = "demographic")]
         public Demographic Demographic { get; set; }
 

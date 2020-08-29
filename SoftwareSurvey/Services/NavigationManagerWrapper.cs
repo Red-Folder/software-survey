@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System;
 
 namespace SoftwareSurvey.Services
 {
@@ -16,6 +17,14 @@ namespace SoftwareSurvey.Services
             _navigationManager.NavigateTo(uri);
         }
 
-        public string CurrentPath => _navigationManager.ToBaseRelativePath(_navigationManager.Uri);
+        public string CurrentPath
+        {
+            get
+            {
+                var currentFullUrl = new Uri(_navigationManager.Uri);
+                return currentFullUrl.AbsolutePath;
+            }
+        }
+            
     }
 }

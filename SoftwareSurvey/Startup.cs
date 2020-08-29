@@ -30,37 +30,37 @@ namespace SoftwareSurvey
             {
                 var start = new Step
                 {
-                    Path = "",
+                    Path = "/",
                     PageTitle = "WELCOME"
                 };
                 var demographic = new Step
                 {
-                    Path = "Demographic",
+                    Path = "/Demographic",
                     PageTitle = "DEMOGRAPHICS"
                 };
                 var softwareTypes = new Step
                 {
-                    Path = "SoftwareTypes",
+                    Path = "/SoftwareTypes",
                     PageTitle = "SOFTWARE TYPES"
                 };
                 var experiences = new Step
                 {
-                    Path = "Experiences",
+                    Path = "/Experiences",
                     PageTitle = "YOUR EXPERIENCES"
                 };
                 var oneChange = new Step
                 {
-                    Path = "OneChange",
+                    Path = "/OneChange",
                     PageTitle = "ONE CHANGE"
                 };
                 var contact = new Step
                 {
-                    Path = "Contact",
+                    Path = "/Contact",
                     PageTitle = "FURTHER CONTACT"
                 };
                 var thankYou = new Step
                 {
-                    Path = "ThankYou",
+                    Path = "/ThankYou",
                     PageTitle = "THANK YOU"
                 };
                 start.NextStep = demographic;

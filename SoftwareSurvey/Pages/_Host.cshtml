@@ -35,8 +35,16 @@
     </header>
 
     <div class="app-container">
+        @{ 
+            var requestDetails = new SoftwareSurvey.Models.RequestDetails
+            {
+                IsTest = HttpContext.Request.QueryString.HasValue && HttpContext.Request.QueryString.Value.Contains("IsTest", StringComparison.InvariantCultureIgnoreCase),
+                ConnectionIpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                ForwardedIpAddress = HttpContext.Request.Headers.ContainsKey("X-Forwarded-For") ? HttpContext.Request.Headers["X-Forwarded-For"].ToString() : null
+            };
+        }
         <app>
-            <component type="typeof(App)" render-mode="ServerPrerendered" />
+            <component type="typeof(App)" render-mode="ServerPrerendered" param-RequestDetails="requestDetails"/>
         </app>
     </div>
 
