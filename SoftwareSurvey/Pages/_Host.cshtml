@@ -10,6 +10,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@@RedFolderMark" />
+    <meta property="og:title" name="twitter:title" content="Attitudes to custom software development survey" />
+    <meta property="og:description" name="twitter:description" content="Have your say in a survey of UK Executive's attitudes towards custom Software Development.  Share your opinions in this short 5 step survey." />
+    <meta property="og:image" name="twitter:image" content="https://software-survey.red-folder.com/images/TwitterCard.png" />
+
     <title>ATTITUDES TO CUSTOM SOFTWARE DEVELOPMENT SURVEY</title>
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
@@ -35,7 +42,7 @@
     </header>
 
     <div class="app-container">
-        @{ 
+        @{
             var requestDetails = new SoftwareSurvey.Models.RequestDetails
             {
                 IsTest = HttpContext.Request.QueryString.HasValue && HttpContext.Request.QueryString.Value.Contains("IsTest", StringComparison.InvariantCultureIgnoreCase),
@@ -44,7 +51,7 @@
             };
         }
         <app>
-            <component type="typeof(App)" render-mode="ServerPrerendered" param-RequestDetails="requestDetails"/>
+            <component type="typeof(App)" render-mode="ServerPrerendered" param-RequestDetails="requestDetails" />
         </app>
     </div>
 
@@ -68,5 +75,40 @@
 
     <script src="_framework/blazor.server.js"></script>
     <script src="/scripts//SurverySite.js"></script>
+
+    <script type="application/ld+json">
+        {
+            "@@context": "http://schema.org/",
+            "@@type": "WebSite",
+            "url": "https://software-survey.red-folder.com/",
+            "name": "Attitudes to custom software development survey",
+
+            "datePublished": "2020-09-01",
+            "dateCreated": "2020-09-01",
+            "dateModified": "2020-09-01",
+            "description": "Have your say in a survey of UK Executive's attitudes towards custom Software Development.  Share your opinions in this short 5 step survey.",
+
+            "image": {
+                "@@type": "ImageObject",
+                "url": "https://software-survey.red-folder.com/images/TwitterCard.png",
+                "height": "628",
+                "width": " 1200"
+            },
+
+            "publisher": {
+                "@@type": "Organization",
+                "name": "Red Folder Consultancy Ltd",
+                "logo": {
+                    "@@type": "ImageObject",
+                    "url": "https://www.red-folder.com/media/RFCLogo.png"
+                }
+            },
+
+            "author": {
+                "@@type": "Person",
+                "name": "Mark Taylor"
+            }
+        }
+    </script>
 </body>
 </html>
