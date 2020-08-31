@@ -36,7 +36,7 @@ namespace SoftwareSurvey.E2ETests
 
         private readonly By SURVEY_RESULTS = By.Id("survey-results");
         private readonly By FOLLOW_UP_QUESTIONS = By.Id("follow-up-questions");
-        private readonly By FUTURE_SURVEYS = By.Id("future-surveys");
+        private readonly By FURTHER_SURVEYS = By.Id("further-surveys");
         private readonly By EMAIL = By.Id("email");
 
         private IWebDriver _driver;
@@ -95,7 +95,7 @@ namespace SoftwareSurvey.E2ETests
             await ClickNextFor("FURTHER CONTACT");
             _driver.FindElement(SURVEY_RESULTS).Click();
             _driver.FindElement(FOLLOW_UP_QUESTIONS).Click();
-            _driver.FindElement(FUTURE_SURVEYS).Click();
+            _driver.FindElement(FURTHER_SURVEYS).Click();
             await WaitForElement(EMAIL);
             _driver.FindElement(EMAIL).SendKeys("test@red-folder.com");
 
@@ -153,8 +153,8 @@ namespace SoftwareSurvey.E2ETests
 
         private async Task WaitForPageTitle(string pageTitle)
         {
-            // Allow time for Blazor to do its thing (fail after 5 attempt)
-            for (int i = 0; i < 5; i++)
+            // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
+            for (int i = 0; i < 60; i++)
             {
                 await Task.Delay(500);
                 if (_driver.FindElement(PAGE_TITLE).Text == pageTitle) return;
@@ -165,8 +165,8 @@ namespace SoftwareSurvey.E2ETests
 
         private async Task WaitForElement(By by)
         {
-            // Allow time for Blazor to do its thing (fail after 5 attempt)
-            for (int i = 0; i < 5; i++)
+            // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
+            for (int i = 0; i < 60; i++)
             {
                 await Task.Delay(500);
 
