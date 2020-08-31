@@ -146,8 +146,7 @@ namespace SoftwareSurvey.E2ETests
 
         private async Task ClickNext()
         {
-            // Allow time for Blazor to wire up all the JS
-            await Task.Delay(500);
+            await WaitForElement(NEXT_BUTTON);
             _driver.FindElement(NEXT_BUTTON).Click();
         }
 
@@ -175,6 +174,10 @@ namespace SoftwareSurvey.E2ETests
                     _driver.FindElement(by);
                 }
                 catch (NoSuchElementException)
+                {
+                    continue;
+                }
+                catch (StaleElementReferenceException)
                 {
                     continue;
                 }
