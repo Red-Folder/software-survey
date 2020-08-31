@@ -16,7 +16,7 @@ namespace SoftwareSurvey.Models
         [Description("Website(s) providing information (portfolio, blog, etc)")]
         [Required(ErrorMessage = "Please select a value")]
         [JsonProperty(PropertyName = "informationWebsite")]
-        public int? InformatitonWebsite { get; set; }
+        public int? InformationWebsite { get; set; }
 
         [DisplayName("Mobile App")]
         [Description("Application(s) for install on mobile or tablet")]
