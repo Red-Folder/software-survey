@@ -46,9 +46,13 @@
 
     private SoftwareSurvey.Models.Contact _model;
 
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
+
     protected override void OnInitialized()
     {
         _model = _surveyResponse.Contact;
+        _eventLoggingService.TrackEvent("Loaded contact page");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

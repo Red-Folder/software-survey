@@ -20,6 +20,9 @@ namespace SoftwareSurvey.Components
         [Inject]
         private ISurveyNavigationService _surveyNavigationService { get; set; }
 
+        [Inject]
+        private IEventLoggingService _eventLoggingService { get; set; }
+
         private EditContext _editContext;
 
         private bool HasModel => Model != null;
@@ -36,10 +39,13 @@ namespace SoftwareSurvey.Components
         {
             if (_surveyNavigationService.HasNext)
             {
+                _eventLoggingService.TrackEvent("Next button pressed");
                 if (ShouldNotChangePageDueToInvalidModel)
                 {
+                    _eventLoggingService.TrackEvent("Next not actioned due to invalid model");
                     return;
                 }
+                _eventLoggingService.TrackEvent("Next actioned");
                 _surveyNavigationService.HandleNext();
             }
         }
@@ -48,10 +54,13 @@ namespace SoftwareSurvey.Components
         {
             if (_surveyNavigationService.HasPrevious)
             {
+                _eventLoggingService.TrackEvent("Previous button pressed");
                 if (ShouldNotChangePageDueToInvalidModel)
                 {
+                    _eventLoggingService.TrackEvent("Previous not actioned due to invalid model");
                     return;
                 }
+                _eventLoggingService.TrackEvent("Previous actioned");
                 _surveyNavigationService.HandlePrevious();
             }
         }

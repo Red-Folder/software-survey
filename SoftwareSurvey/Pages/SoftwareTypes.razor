@@ -18,11 +18,15 @@
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
 
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
+
     private SoftwareSurvey.Models.SoftwareTypes _model;
 
     protected override void OnInitialized()
     {
         _model = _surveyResponse.SoftwareTypes;
+        _eventLoggingService.TrackEvent("Loaded software types page");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

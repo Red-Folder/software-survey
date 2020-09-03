@@ -93,6 +93,7 @@ namespace SoftwareSurvey
             services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
             //services.AddTransient<IPersistanceManager, FakePersistanceManager>();
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
+            services.AddTransient<IEventLoggingService, EventLoggingService>();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
         }
 

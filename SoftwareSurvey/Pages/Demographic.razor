@@ -63,11 +63,15 @@
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
 
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
+
     private SoftwareSurvey.Models.Demographic _model;
 
     protected override void OnInitialized()
     {
         _model = _surveyResponse.Demographic;
+        _eventLoggingService.TrackEvent("Loaded demographic page");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

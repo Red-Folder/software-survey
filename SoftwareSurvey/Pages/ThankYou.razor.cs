@@ -14,8 +14,16 @@ namespace SoftwareSurvey.Pages
         [Inject]
         private IPersistanceManager _persistanceManager { get; set; }
 
+        [Inject]
+        private IEventLoggingService _eventLoggingService { get; set; }
+
         private bool Saved { get; set; }
         private bool Error { get; set; }
+
+        protected override void OnInitialized()
+        {
+            _eventLoggingService.TrackEvent("Loaded thank you page");
+        }
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -36,12 +44,23 @@ namespace SoftwareSurvey.Pages
 
         private void SaveData()
         {
+            _eventLoggingService.TrackEvent("Save started");
+
             var task = _persistanceManager.Persist(_surveyResponse);
             task.ContinueWith(async x =>
             {
                 Error = !x.Result;
                 Saved = true;
                 await InvokeAsync(StateHasChanged);
+
+                if (Error)
+                {
+                    _eventLoggingService.TrackEvent("Save failed");
+                }
+                else
+                {
+                    _eventLoggingService.TrackEvent("Save completed");
+                }
             });
 
             Task.Run(() => task);

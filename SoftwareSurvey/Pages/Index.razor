@@ -14,8 +14,13 @@
     [Inject]
     public SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
+
     protected override void OnInitialized()
     {
         _surveyResponse.HasBeenToStart = true;
+
+        _eventLoggingService.TrackEvent("Loaded index page");
     }
 }
