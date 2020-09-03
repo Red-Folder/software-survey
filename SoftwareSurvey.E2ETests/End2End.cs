@@ -156,7 +156,18 @@ namespace SoftwareSurvey.E2ETests
             for (int i = 0; i < 60; i++)
             {
                 await Task.Delay(500);
-                if (_driver.FindElement(PAGE_TITLE).Text == pageTitle) return;
+                try
+                {
+                    if (_driver.FindElement(PAGE_TITLE).Text == pageTitle) return;
+                }
+                catch (NoSuchElementException)
+                {
+                    continue;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    continue;
+                }
             }
 
             Assert.Equal(pageTitle, _driver.FindElement(PAGE_TITLE).Text);
@@ -191,8 +202,20 @@ namespace SoftwareSurvey.E2ETests
             for (int i = 0; i < 60; i++)
             {
                 await Task.Delay(500);
-                var currentPageTitle = _driver.FindElement(PAGE_TITLE).Text;
-                if (currentPageTitle != "SAVING ..." && currentPageTitle != "FURTHER CONTACT") return;
+
+                try
+                {
+                    var currentPageTitle = _driver.FindElement(PAGE_TITLE).Text;
+                    if (currentPageTitle != "SAVING ..." && currentPageTitle != "FURTHER CONTACT") return;
+                }
+                catch (NoSuchElementException)
+                {
+                    continue;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    continue;
+                }
             }
         }
     }
