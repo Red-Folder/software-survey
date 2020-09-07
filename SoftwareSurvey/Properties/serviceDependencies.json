@@ -3,6 +3,13 @@
     "appInsights1": {
       "type": "appInsights",
       "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure__SignalR__ConnectionString"
     }
   }
 }
