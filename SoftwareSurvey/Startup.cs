@@ -24,7 +24,8 @@ namespace SoftwareSurvey
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            
+            services.AddSignalR().AddAzureSignalR();
+
             services.AddSingleton(x => Configuration.GetSection(PersistanceConfiguration.Section).Get<PersistanceConfiguration>());
             services.AddSingleton<ISteps>(x =>
             {
