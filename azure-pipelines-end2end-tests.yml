@@ -28,8 +28,7 @@ steps:
     script: |
       $deploymentOutputs=ConvertFrom-Json '$(DeploymentOutputs)'
       $appServiceName=$deploymentOutputs.appServiceName.value
-      Write-Host "appServiceName=$appServiceName"
-      Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName".
+      Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName"
 
 - task: DownloadBuildArtifacts@0
   inputs:
