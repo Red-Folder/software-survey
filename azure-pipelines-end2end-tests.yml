@@ -43,8 +43,8 @@ steps:
       $cosmosEndpoint = $deploymentOutputs.cosmosEndpoint.value
       $cosmosPrimaryKey = $deploymentOutputs.cosmosPrimaryKey.value
       Write-Host "##vso[task.setvariable variable=E2ETARGET;]$e2eTarget"
-      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:CosmosDbEndpoint';]$cosmoEndpoint"
-      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:Persistance:CosmosDbPrimaryKey';]$cosmosPrimaryKey"
+      Write-Host "##vso[task.setvariable variable=SoftwareSurvey:CosmosDbEndpoint;]$cosmoEndpoint"
+      Write-Host "##vso[task.setvariable variable=SoftwareSurvey:Persistance:CosmosDbPrimaryKey;]$cosmosPrimaryKey"
       
       dir env:
 
