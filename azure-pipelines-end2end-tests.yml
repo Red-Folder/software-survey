@@ -39,6 +39,15 @@ steps:
       $env:E2ETARGET=$deploymentOutputs.appServiceUrl.value
       $env:SoftwareSurvey:CosmosDbEndpoint=$deploymentOutputs.cosmosEndpoint.value
       $env:SoftwareSurvey:Persistance:CosmosDbPrimaryKey=$deploymentOutputs.cosmosPrimaryKey.value
+      
+      dir env:
+
+- task: PowerShell@2
+  displayName: 'Temp'
+  inputs:
+    targetType: 'inline'
+    script: |
+      dir env:
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download the App'
