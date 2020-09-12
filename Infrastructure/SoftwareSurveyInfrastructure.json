@@ -1,0 +1,117 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "type": "string",
+      "defaultValue": "e2e"
+    }
+  },
+  "functions": [],
+  "variables": {
+    "nameprefix": "[format('rfc-{0}-software-survey', parameters('environment'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.SignalRService/SignalR",
+      "apiVersion": "2020-07-01-preview",
+      "name": "[format('{0}-signalr', variables('nameprefix'))]",
+      "location": "[resourceGroup().location]",
+      "kind": "SignalR",
+      "sku": {
+        "name": "Free_F1"
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "apiVersion": "2020-06-01-preview",
+      "name": "[format('{0}-db', variables('nameprefix'))]",
+      "location": "[resourceGroup().location]",
+      "kind": "GlobalDocumentDB",
+      "properties": {
+        "enableFreeTier": true,
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session"
+        }
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[format('{0}-application-insights', variables('nameprefix'))]",
+      "location": "[resourceGroup().location]",
+      "kind": "web",
+      "properties": {
+        "ApplicationType": "web",
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-11-01",
+      "name": "[format('{0}-app-plan', variables('nameprefix'))]",
+      "location": "[resourceGroup().location]",
+      "kind": "linux",
+      "sku": {
+        "name": "F1",
+        "capacity": 1
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[format('{0}-web-app', variables('nameprefix'))]",
+      "location": "[resourceGroup().location]",
+      "kind": "app",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-app-plan', variables('nameprefix')))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(resourceId('microsoft.insights/components', format('{0}-application-insights', variables('nameprefix')))).InstrumentationKey]"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference(resourceId('microsoft.insights/components', format('{0}-application-insights', variables('nameprefix')))).ConnectionString]"
+            },
+            {
+              "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "Azure__SignalR__ConnectionString",
+              "value": "[listKeys(resourceId('Microsoft.SignalRService/SignalR', format('{0}-signalr', variables('nameprefix'))), '2020-07-01-preview').primaryConnectionString]"
+            },
+            {
+              "name": "Persistance:CosmosDbEndpoint",
+              "value": "[reference(resourceId('Microsoft.DocumentDB/databaseAccounts', format('{0}-db', variables('nameprefix')))).documentEndpoint]"
+            },
+            {
+              "name": "Persistance:CosmosDbPrimaryKey",
+              "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', format('{0}-db', variables('nameprefix'))), '2020-06-01-preview').primaryMasterKey]"
+            },
+            {
+              "name": "XDT_MicrosoftApplicationInsights_Mode",
+              "value": "default"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', format('{0}-application-insights', variables('nameprefix')))]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', format('{0}-db', variables('nameprefix')))]",
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-app-plan', variables('nameprefix')))]",
+        "[resourceId('Microsoft.SignalRService/SignalR', format('{0}-signalr', variables('nameprefix')))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "appServiceName": {
+      "type": "string",
+      "value": "[format('{0}-web-app', variables('nameprefix'))]"
+    }
+  }
+}
