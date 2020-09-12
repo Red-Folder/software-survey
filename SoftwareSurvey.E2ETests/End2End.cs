@@ -1,9 +1,12 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SoftwareSurvey.E2ETests
 {
@@ -11,6 +14,7 @@ namespace SoftwareSurvey.E2ETests
     {
         private const string E2E_TARGET = "E2ETARGET";
         private const string DEFAULT_URL = "https://software-survey.red-folder.com/";
+        private const string SCREENSHOT_LOCATION = "SCREENSHOTLOCATION";
 
         private readonly By PAGE_TITLE = By.CssSelector("h1");
         private readonly By NEXT_BUTTON = By.XPath("//button[@type='submit' and text()='Next']");
@@ -41,19 +45,29 @@ namespace SoftwareSurvey.E2ETests
         private readonly By FURTHER_SURVEYS = By.Id("further-surveys");
         private readonly By EMAIL = By.Id("email");
 
+        private ITestOutputHelper _testOutputHelper;
         private IWebDriver _driver;
         private string _testRunId;
         private DataStore _dataStore;
 
-        public End2End()
+        public End2End(ITestOutputHelper testOutputHelper)
         {
             _driver = new ChromeDriver();
             _testRunId = Guid.NewGuid().ToString();
             _dataStore = new DataStore();
+            _testOutputHelper = testOutputHelper;
         }
 
         public void Dispose()
         {
+            var screenshotLocation = Environment.GetEnvironmentVariable(SCREENSHOT_LOCATION);
+
+            if (!string.IsNullOrWhiteSpace(screenshotLocation))
+            {
+                var screenshot = _driver.TakeScreenshot();
+                screenshot.SaveAsFile(Path.Combine(screenshotLocation, "finalscreen.png"));
+            }
+
             _driver.Quit();
         }
 
