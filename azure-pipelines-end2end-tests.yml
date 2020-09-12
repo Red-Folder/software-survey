@@ -3,6 +3,7 @@ pool:
 
 variables:
   ResourceGroupName: 'rfc-e2e-software-survey'
+  AppServiceName: 'NOT SET'
 
 steps:
 - task: AzureResourceManagerTemplateDeployment@3
@@ -22,7 +23,22 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Write your PowerShell commands here.
-      
-      Write-Host "$(DeploymentOutputs)"
+      $deploymentOutputs=ConvertFrom-Json '$(DeploymentOutputs)'
+      $appServiceName=$deploymentOutputs.appServiceName.value
+      Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName".
 
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'specific'
+    project: '9edc70a4-66ef-45a6-b8c7-40c42a429065'
+    definition: '22'
+    buildVersionToDownload: 'latest'
+    targetPath: '$(Pipeline.Workspace)'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Red Folder Staging(276e2abc-6a34-4925-b24f-73913402ea4a)'
+    appType: 'webApp'
+    WebAppName: '$(AppServiceName)'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
