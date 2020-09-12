@@ -18,5 +18,11 @@ steps:
     deploymentMode: 'Complete'
     deploymentOutputs: 'DeploymentOutputs'
 
-
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      
+      Write-Host "$(DeploymentOutputs)"
 
