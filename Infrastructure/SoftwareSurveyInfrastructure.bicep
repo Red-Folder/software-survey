@@ -87,3 +87,6 @@ resource website 'Microsoft.Web/sites@2018-11-01' = {
 }
 
 output appServiceName string = website.name
+output appServiceUrl string = 'http://${website.name}.azurewebsites.net/'
+output cosmosEndpoint string = cosmos.properties.documentEndpoint
+output cosmosPrimaryKey string = listKeys(cosmos.id, '2020-06-01-preview').primaryMasterKey

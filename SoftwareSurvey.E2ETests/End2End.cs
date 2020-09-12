@@ -9,7 +9,9 @@ namespace SoftwareSurvey.E2ETests
 {
     public class End2End : IDisposable
     {
-        private const string URL = "https://software-survey.red-folder.com/?IsTest";
+        private const string E2E_TARGET = "E2ETARGET";
+        private const string DEFAULT_URL = "https://software-survey.red-folder.com/";
+
         private readonly By PAGE_TITLE = By.CssSelector("h1");
         private readonly By NEXT_BUTTON = By.XPath("//button[@type='submit' and text()='Next']");
 
@@ -59,7 +61,8 @@ namespace SoftwareSurvey.E2ETests
         [Trait("End2End", "Chrome")]
         public async Task HappyPathRun()
         {
-            _driver.Navigate().GoToUrl(URL);
+            var url = Environment.GetEnvironmentVariable(E2E_TARGET) ?? DEFAULT_URL;
+            _driver.Navigate().GoToUrl($"{url}?isTest");
             await WaitForPageTitle("WELCOME");
 
             await ClickNextFor("DEMOGRAPHICS");

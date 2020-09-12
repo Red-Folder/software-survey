@@ -112,6 +112,18 @@
     "appServiceName": {
       "type": "string",
       "value": "[format('{0}-web-app', variables('nameprefix'))]"
+    },
+    "appServiceUrl": {
+      "type": "string",
+      "value": "[format('http://{0}.azurewebsites.net/', format('{0}-web-app', variables('nameprefix')))]"
+    },
+    "cosmosEndpoint": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.DocumentDB/databaseAccounts', format('{0}-db', variables('nameprefix')))).documentEndpoint]"
+    },
+    "cosmosPrimaryKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', format('{0}-db', variables('nameprefix'))), '2020-06-01-preview').primaryMasterKey]"
     }
   }
 }
