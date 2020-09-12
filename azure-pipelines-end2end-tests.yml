@@ -35,12 +35,16 @@ steps:
       $deploymentOutputs=ConvertFrom-Json '$(DeploymentOutputs)'
 
       # Used for the App Deployment
-      Write-Host "##vso[task.setvariable variable=AppServiceName;]$deploymentOutputs.appServiceName.value"
+      $appServiceName = $deploymentOutputs.appServiceName.value
+      Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName"
 
       #Used for the E2E Tests
-      Write-Host "##vso[task.setvariable variable=E2ETARGET;]$deploymentOutputs.appServiceUrl.value"
-      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:CosmosDbEndpoint';]$deploymentOutputs.cosmosEndpoint.value"
-      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:Persistance:CosmosDbPrimaryKey';]$deploymentOutputs.cosmosPrimaryKey.value"
+      $e2eTarget = $deploymentOutputs.appServiceUrl.value
+      $cosmosEndpoint = $deploymentOutputs.cosmosEndpoint.value
+      $cosmosPrimaryKey = $deploymentOutputs.cosmosPrimaryKey.value
+      Write-Host "##vso[task.setvariable variable=E2ETARGET;]$e2eTarget"
+      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:CosmosDbEndpoint';]$cosmoEndpoint"
+      Write-Host "##vso[task.setvariable variable='SoftwareSurvey:Persistance:CosmosDbPrimaryKey';]$cosmosPrimaryKey"
       
       dir env:
 
