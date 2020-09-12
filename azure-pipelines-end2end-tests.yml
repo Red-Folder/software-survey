@@ -25,13 +25,20 @@ steps:
     deploymentOutputs: 'DeploymentOutputs'
 
 - task: PowerShell@2
-  displayName: 'Extract App Service Name from E2E Infrastructure'
+  displayName: 'Extract variables from E2E Infrastructure'
   inputs:
     targetType: 'inline'
     script: |
       $deploymentOutputs=ConvertFrom-Json '$(DeploymentOutputs)'
+
+      # Used for the App Deployment (Azure DevOps Pipeline variable)
       $appServiceName=$deploymentOutputs.appServiceName.value
       Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName"
+
+      #Used for the E2E Tests (environment variables)
+      $env:E2ETARGET=$deploymentOutputs.appServiceUrl.value
+      $env:SoftwareSurvey:CosmosDbEndpoint=$deploymentOutputs.cosmosEndpoint.value
+      $env:SoftwareSurvey:Persistance:CosmosDbPrimaryKey=$deploymentOutputs.cosmosPrimaryKey.value
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download the App'
