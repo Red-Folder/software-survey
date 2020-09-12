@@ -27,15 +27,17 @@ steps:
     script: |
       $deploymentOutputs=ConvertFrom-Json '$(DeploymentOutputs)'
       $appServiceName=$deploymentOutputs.appServiceName.value
+      Write-Host "appServiceName=$appServiceName"
       Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName".
 
-- task: DownloadPipelineArtifact@2
+- task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'specific'
     project: '9edc70a4-66ef-45a6-b8c7-40c42a429065'
-    definition: '22'
+    pipeline: '22'
     buildVersionToDownload: 'latest'
-    targetPath: '$(Pipeline.Workspace)'
+    downloadType: 'single'
+    downloadPath: '$(Pipeline.Workspace)'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
