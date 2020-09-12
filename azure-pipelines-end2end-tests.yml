@@ -7,9 +7,11 @@ variables:
   ResourceGroupName: 'rfc-e2e-software-survey'
   AppServiceName: 'NOT SET'
   AppDropFolder: 'app'
+  E2ETestDropFolder: 'e2etest'
 
 steps:
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Create E2E Infrastructure'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: 'Red Folder Staging(276e2abc-6a34-4925-b24f-73913402ea4a)'
@@ -23,6 +25,7 @@ steps:
     deploymentOutputs: 'DeploymentOutputs'
 
 - task: PowerShell@2
+  displayName: 'Extract App Service Name from E2E Infrastructure'
   inputs:
     targetType: 'inline'
     script: |
@@ -31,6 +34,7 @@ steps:
       Write-Host "##vso[task.setvariable variable=AppServiceName;]$appServiceName"
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download the App'
   inputs:
     buildType: 'specific'
     project: '9edc70a4-66ef-45a6-b8c7-40c42a429065'
@@ -41,6 +45,7 @@ steps:
     downloadPath: '$(AppDropFolder)'
 
 - task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy App to E2E Infrastructure'
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Red Folder Staging(276e2abc-6a34-4925-b24f-73913402ea4a)'
@@ -48,3 +53,30 @@ steps:
     WebAppName: $(AppServiceName)
     packageForLinux: '$(AppDropFolder)/**/*.zip'
 
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download the E2E tests'
+  inputs:
+    buildType: 'specific'
+    project: '9edc70a4-66ef-45a6-b8c7-40c42a429065'
+    pipeline: '22'
+    buildVersionToDownload: 'latest'
+    artifactName: 'test_drop'
+    downloadType: 'single'
+    downloadPath: '$(E2ETestDropFolder)'
+
+- task: PowerShell@2
+  displayName: 'Adds ChromeWebDriver for Selenium to PATH'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "##vso[task.prependpath]$env:CHROMEWEBDRIVER"'
+
+- task: VSTest@2
+  displayName: 'Run E2E Tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*.E2ETests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(E2ETestDropFolder)'
+    uiTests: true
