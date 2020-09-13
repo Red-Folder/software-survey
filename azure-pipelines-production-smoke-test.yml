@@ -35,6 +35,9 @@ steps:
       !**\obj\**
     searchFolder: '$(E2ETestDropFolder)'
     uiTests: true
+  env:
+    'SoftwareSurvey:CosmosDbEndpoint': $(CosmosDbEndpoint)
+    'SoftwareSurvey:Persistance:CosmosDbPrimaryKey': $(CosmosDbPrimaryKey)
 
 - task: PublishBuildArtifacts@1
   inputs:
