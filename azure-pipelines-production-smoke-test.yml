@@ -1,0 +1,43 @@
+trigger: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  SCREENSHOTLOCATION: '$(Build.ArtifactStagingDirectory)\screenshots'
+  E2ETestDropFolder: 'e2etest'
+
+steps:
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download the E2E tests'
+  inputs:
+    buildType: 'specific'
+    project: '9edc70a4-66ef-45a6-b8c7-40c42a429065'
+    pipeline: '22'
+    buildVersionToDownload: 'latest'
+    artifactName: 'test_drop'
+    downloadType: 'single'
+    downloadPath: '$(E2ETestDropFolder)'
+
+- task: PowerShell@2
+  displayName: 'Adds ChromeWebDriver for Selenium to PATH'
+  inputs:
+    targetType: 'inline'
+    script: 'echo "##vso[task.prependpath]$env:CHROMEWEBDRIVER"'
+
+- task: VSTest@2
+  displayName: 'Run E2E Tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*.E2ETests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(E2ETestDropFolder)'
+    uiTests: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(SCREENSHOTLOCATION)'
+    ArtifactName: 'screenshots'
+    publishLocation: 'Container'
