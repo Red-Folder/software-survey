@@ -1,16 +1,5 @@
 trigger: none
 
-schedules:
-- cron: "0 8 * * *"
-  displayName: '8am Build'
-  always: true
-- cron: "0 12 * * *"
-  displayName: '12pm Build'
-  always: true
-- cron: "0 16 * * *"
-  displayName: '4pm Build'
-  always: true
-
 pool:
   vmImage: 'windows-latest'
 
