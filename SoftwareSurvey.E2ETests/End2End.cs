@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -52,7 +53,12 @@ namespace SoftwareSurvey.E2ETests
 
         public End2End(ITestOutputHelper testOutputHelper)
         {
-            _driver = new ChromeDriver();
+            var service = ChromeDriverService.CreateDefaultService();
+            service.EnableVerboseLogging = true;
+            var options = new ChromeOptions();
+            options.SetLoggingPreference(LogType.Browser, LogLevel.All);
+            _driver = new ChromeDriver(service, options);
+
             _testRunId = Guid.NewGuid().ToString();
             _dataStore = new DataStore();
             _testOutputHelper = testOutputHelper;
@@ -60,15 +66,59 @@ namespace SoftwareSurvey.E2ETests
 
         public void Dispose()
         {
-            var screenshotLocation = Environment.GetEnvironmentVariable(SCREENSHOT_LOCATION);
-
-            if (!string.IsNullOrWhiteSpace(screenshotLocation))
-            {
-                var screenshot = _driver.TakeScreenshot();
-                screenshot.SaveAsFile(Path.Combine(screenshotLocation, "finalscreen.png"));
-            }
-
+            TakeScreenshot("finalscreen");
+            OutputBrowserConsoleLog();
             _driver.Quit();
+        }
+
+        private void OutputBrowserConsoleLog()
+        {
+            try
+            {
+                OutputHeading("Console output");
+                foreach (var logEntry in _driver.Manage().Logs.GetLog(LogType.Browser))
+                {
+                    _testOutputHelper.WriteLine(logEntry.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                OutputHeading("Exception while attempting to output the Console");
+                _testOutputHelper.WriteLine(ex.Message);
+                _testOutputHelper.WriteLine(ex.StackTrace);
+            }
+        }
+
+        private void TakeScreenshot(string stage)
+        {
+            try
+            {
+                var screenshotLocation = Environment.GetEnvironmentVariable(SCREENSHOT_LOCATION);
+                if (!string.IsNullOrWhiteSpace(screenshotLocation))
+                {
+                    Directory.CreateDirectory(screenshotLocation);
+
+                    var filename = Path.Combine(screenshotLocation, $"{stage}.png");
+
+                    if (File.Exists(filename)) File.Delete(filename);
+
+                    var screenshot = _driver.TakeScreenshot();
+                    screenshot.SaveAsFile(filename);
+                }
+            }
+            catch (Exception ex)
+            {
+                OutputHeading("Exception while attempting to take screenshot");
+                _testOutputHelper.WriteLine(ex.Message);
+                _testOutputHelper.WriteLine(ex.StackTrace);
+            }
+        }
+
+        private void OutputHeading(string heading)
+        {
+            _testOutputHelper.WriteLine("===================================");
+            _testOutputHelper.WriteLine(heading);
+            _testOutputHelper.WriteLine("===================================");
         }
 
         [Fact]
@@ -80,7 +130,7 @@ namespace SoftwareSurvey.E2ETests
             await WaitForPageTitle("WELCOME");
 
             await ClickNextFor("DEMOGRAPHICS");
-            
+
             var companySize = new SelectElement(_driver.FindElement(COMPANY_SIZE));
             companySize.SelectByText("201-500 employees");
             var jobSeniority = new SelectElement(_driver.FindElement(JOB_SENORITY));
