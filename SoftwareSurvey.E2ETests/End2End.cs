@@ -91,8 +91,8 @@ namespace SoftwareSurvey.E2ETests
 
         private void TakeScreenshot(string stage)
         {
-            try
-            {
+            //try
+            //{
                 var screenshotLocation = Environment.GetEnvironmentVariable(SCREENSHOT_LOCATION);
                 if (!string.IsNullOrWhiteSpace(screenshotLocation))
                 {
@@ -105,13 +105,13 @@ namespace SoftwareSurvey.E2ETests
                     var screenshot = _driver.TakeScreenshot();
                     screenshot.SaveAsFile(filename);
                 }
-            }
-            catch (Exception ex)
-            {
-                OutputHeading("Exception while attempting to take screenshot");
-                _testOutputHelper.WriteLine(ex.Message);
-                _testOutputHelper.WriteLine(ex.StackTrace);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    OutputHeading("Exception while attempting to take screenshot");
+             //   _testOutputHelper.WriteLine(ex.Message);
+             //   _testOutputHelper.WriteLine(ex.StackTrace);
+            //}
         }
 
         private void OutputHeading(string heading)
