@@ -40,7 +40,12 @@ steps:
     'SoftwareSurvey:Persistance:CosmosDbPrimaryKey': $(CosmosDbPrimaryKey)
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish the screenshots'
+  condition: succeededOrFailed()
   inputs:
     PathtoPublish: '$(SCREENSHOTLOCATION)'
     ArtifactName: 'screenshots'
     publishLocation: 'Container'
+  
+
+  
