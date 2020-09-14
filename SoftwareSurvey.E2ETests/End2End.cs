@@ -17,9 +17,6 @@ namespace SoftwareSurvey.E2ETests
         private const string DEFAULT_URL = "https://software-survey.red-folder.com/";
         private const string SCREENSHOT_LOCATION = "SCREENSHOTLOCATION";
 
-        private readonly By PAGE_TITLE = By.CssSelector("h1");
-        private readonly By NEXT_BUTTON = By.XPath("//button[@type='submit' and text()='Next']");
-
         private readonly By COMPANY_SIZE = By.Id("company-size");
         private readonly By JOB_SENORITY = By.Id("job-seniority");
         private readonly By JOB_TITLE = By.Id("job-title");
@@ -127,9 +124,18 @@ namespace SoftwareSurvey.E2ETests
         {
             var url = Environment.GetEnvironmentVariable(E2E_TARGET) ?? DEFAULT_URL;
             _driver.Navigate().GoToUrl($"{url}?isTest");
-            await WaitForPageTitle("WELCOME");
 
-            await ClickNextFor("DEMOGRAPHICS");
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "WELCOME",
+                                "Wait for the Welcome Title");
+
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "DEMOGRAPHICS",
+                                "Wait for the Demographics Title");
 
             var companySize = new SelectElement(_driver.FindElement(COMPANY_SIZE));
             companySize.SelectByText("201-500 employees");
@@ -139,7 +145,14 @@ namespace SoftwareSurvey.E2ETests
             var ukBased = new SelectElement(_driver.FindElement(UK_BASED));
             ukBased.SelectByText("Partially");
 
-            await ClickNextFor("SOFTWARE TYPES");
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "SOFTWARE TYPES",
+                                "Wait for the Software Types Title");
+
             _driver.FindElements(ECOMMERCE)[3].Click();
             _driver.FindElements(INFORMATION_WEBSITE)[3].Click();
             _driver.FindElements(MOBILE_APPS)[3].Click();
@@ -147,7 +160,14 @@ namespace SoftwareSurvey.E2ETests
             _driver.FindElements(SOFTWARE_AS_A_SERVICE)[3].Click();
             _driver.FindElements(OTHER)[3].Click();
 
-            await ClickNextFor("YOUR EXPERIENCES");
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "YOUR EXPERIENCES",
+                                "Wait for the Your Experience Title");
+
             _driver.FindElements(RETURN_ON_INVESTMENT)[3].Click();
             _driver.FindElements(KEEPING_PACE)[3].Click();
             _driver.FindElements(RECRUITMENT)[3].Click();
@@ -155,18 +175,42 @@ namespace SoftwareSurvey.E2ETests
             _driver.FindElements(QUALITY)[3].Click();
             _driver.FindElements(PREDICABILITY)[3].Click();
 
-            await ClickNextFor("ONE CHANGE");
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "ONE CHANGE",
+                                "Wait for the One Change Title");
+
             _driver.FindElement(TEXT).SendKeys(_testRunId);
 
             // FURTHER CONTACT
-            await ClickNextFor("FURTHER CONTACT");
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "FURTHER CONTACT",
+                                "Wait for the Further Contact Title");
+
             _driver.FindElement(SURVEY_RESULTS).Click();
             _driver.FindElement(FOLLOW_UP_QUESTIONS).Click();
             _driver.FindElement(FURTHER_SURVEYS).Click();
             await WaitForElement(EMAIL);
             _driver.FindElement(EMAIL).SendKeys("test@red-folder.com");
 
-            await ClickNextAndWaitForSaveThenWaitFor("THANK YOU");
+            await RetryActivity(By.XPath("//button[@type='submit' and text()='Next']"),
+                                (element) => { element.Click(); return true; },
+                                "Click on next");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text != "SAVING ..." && element.Text != "FURTHER CONTACT",
+                                "Wait for the Save to complete");
+
+            await RetryActivity(By.CssSelector("h1"),
+                                (element) => element.Text == "THANK YOU",
+                                "Wait for the Thank You Title");
 
             var savedRecord = _dataStore.Retrieve(_testRunId);
 
@@ -198,48 +242,6 @@ namespace SoftwareSurvey.E2ETests
             Assert.Equal("test@red-folder.com", savedRecord.Contact.Email);
         }
 
-        private async Task ClickNextAndWaitForSaveThenWaitFor(string pageTitle)
-        {
-            await ClickNext();
-            await WaitForSave();
-            await WaitForPageTitle(pageTitle);
-        }
-
-        private async Task ClickNextFor(string pageTitle)
-        {
-            await ClickNext();
-            await WaitForPageTitle(pageTitle);
-        }
-
-        private async Task ClickNext()
-        {
-            await WaitForElement(NEXT_BUTTON);
-            _driver.FindElement(NEXT_BUTTON).Click();
-        }
-
-        private async Task WaitForPageTitle(string pageTitle)
-        {
-            // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
-            for (int i = 0; i < 60; i++)
-            {
-                await Task.Delay(500);
-                try
-                {
-                    if (_driver.FindElement(PAGE_TITLE).Text == pageTitle) return;
-                }
-                catch (NoSuchElementException)
-                {
-                    continue;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    continue;
-                }
-            }
-
-            Assert.Equal(pageTitle, _driver.FindElement(PAGE_TITLE).Text);
-        }
-
         private async Task WaitForElement(By by)
         {
             // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
@@ -263,8 +265,10 @@ namespace SoftwareSurvey.E2ETests
             }
         }
 
-        private async Task WaitForSave()
+        private async Task RetryActivity(By by, Func<IWebElement, bool> activity, string activityDescription)
         {
+            _testOutputHelper.WriteLine($"Attempting {activityDescription}");
+
             // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
             for (int i = 0; i < 60; i++)
             {
@@ -272,18 +276,30 @@ namespace SoftwareSurvey.E2ETests
 
                 try
                 {
-                    var currentPageTitle = _driver.FindElement(PAGE_TITLE).Text;
-                    if (currentPageTitle != "SAVING ..." && currentPageTitle != "FURTHER CONTACT") return;
+                    var element = _driver.FindElement(by);
+
+                    if (activity(element)) return;
+
+                    _testOutputHelper.WriteLine("Activity failed to return true");
                 }
                 catch (NoSuchElementException)
                 {
+                    _testOutputHelper.WriteLine("NoSuchElementException received");
                     continue;
                 }
                 catch (StaleElementReferenceException)
                 {
+                    _testOutputHelper.WriteLine("StaleElementReferenceException received");
                     continue;
                 }
+                catch (Exception ex)
+                {
+                    _testOutputHelper.WriteLine($"Exception {ex.GetType().Name} encountered - {ex.Message}");
+                    throw ex;
+                }
             }
+
+            _testOutputHelper.WriteLine("Maximum retries reached");
         }
     }
 }
