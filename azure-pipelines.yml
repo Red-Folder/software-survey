@@ -57,7 +57,7 @@ steps:
     azureSubscription: 'Red Folder Production (20366cfc-092d-46d6-a630-a687d3a04992)'
     appType: 'webApp'
     WebAppName: 'rfc-software-survey'
-    packageForLinux: '$(System.ArtifactStagingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
 
 - task: CopyFiles@2
   displayName: 'Copy the E2E tests'
