@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -96,6 +97,8 @@ namespace SoftwareSurvey
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
             services.AddTransient<IEventLoggingService, EventLoggingService>();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+
+            services.AddScoped<CircuitHandler, IsConnectedCircuitHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

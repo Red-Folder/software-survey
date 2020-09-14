@@ -31,6 +31,9 @@ namespace SoftwareSurvey.Models
         [JsonIgnore]
         public bool HasBeenToStart { get; set; }
 
+        [JsonIgnore]
+        public bool SignalRCircuitEstablished { get; set; }
+
         [JsonProperty(PropertyName = "isTest")]
         public bool IsTest { get; set; }
         [JsonProperty(PropertyName = "connectionIpAddress")]
