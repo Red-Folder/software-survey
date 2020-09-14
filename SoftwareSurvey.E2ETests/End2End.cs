@@ -267,7 +267,7 @@ namespace SoftwareSurvey.E2ETests
 
         private async Task RetryActivity(By by, Func<IWebElement, bool> activity, string activityDescription)
         {
-            _testOutputHelper.WriteLine($"Attempting {activityDescription}");
+            _testOutputHelper.WriteLine($"Attempting '{activityDescription}'");
 
             // Allow time for Blazor to do its thing (fail after 60 attempt - 30 seconds)
             for (int i = 0; i < 60; i++)
@@ -300,6 +300,7 @@ namespace SoftwareSurvey.E2ETests
             }
 
             _testOutputHelper.WriteLine("Maximum retries reached");
+            throw new Exception($"Maximum retries reached while attempting '{activityDescription}'");
         }
     }
 }
