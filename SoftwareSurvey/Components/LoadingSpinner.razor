@@ -1,2 +1,11 @@
-﻿<!-- Taken from https://loading.io/css/ -->
-<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+﻿<h1 class="temporary-header">@Title</h1>
+<p class="loading-spinner">
+    <!-- Taken from https://loading.io/css/ -->
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</p>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+}
+

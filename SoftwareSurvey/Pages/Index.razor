@@ -1,24 +1,13 @@
 ﻿@page "/"
 
-@if (_surveyResponse.SignalRCircuitEstablished)
-{
-    <Navigation />
+<Navigation />
 
-    <SurveyNavigation>
-        <p>Are you a UK Executive, Leader or Manager?</p>
-        <p>Does your organisation use custom Software Development?</p>
-        <p>If so, please add your voice to this short 5 step survey.</p>
-        <p>Responses will be used to produce a report of UK Executive's attitude towards custom Software Development.</p>
-    </SurveyNavigation>
-}
-else
-{
-    <h1 class="temporary-header">Loading ...</h1>
-    <p class="loading-spinner">
-        <LoadingSpinner></LoadingSpinner>
-    </p>
-}
-
+<SurveyNavigation>
+    <p>Are you a UK Executive, Leader or Manager?</p>
+    <p>Does your organisation use custom Software Development?</p>
+    <p>If so, please add your voice to this short 5 step survey.</p>
+    <p>Responses will be used to produce a report of UK Executive's attitude towards custom Software Development.</p>
+</SurveyNavigation>
 
 @code
 {

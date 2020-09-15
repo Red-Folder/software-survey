@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareSurvey", "SoftwareS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareSurvey.UnitTests", "SoftwareSurvey.UnitTests\SoftwareSurvey.UnitTests.csproj", "{4364EC0C-263A-4F4B-8D00-E42DC48456E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareSurvey.Models", "SoftwareSurvey.Models\SoftwareSurvey.Models.csproj", "{BF0DCADB-E1AD-4FBE-A97F-1059C162E53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareSurvey.Models", "SoftwareSurvey.Models\SoftwareSurvey.Models.csproj", "{BF0DCADB-E1AD-4FBE-A97F-1059C162E53E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareSurvey.E2ETests", "SoftwareSurvey.E2ETests\SoftwareSurvey.E2ETests.csproj", "{942F8B6A-67F3-48EB-A540-8F77FBFEECDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareSurvey.E2ETests", "SoftwareSurvey.E2ETests\SoftwareSurvey.E2ETests.csproj", "{942F8B6A-67F3-48EB-A540-8F77FBFEECDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

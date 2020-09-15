@@ -97,8 +97,6 @@ namespace SoftwareSurvey
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
             services.AddTransient<IEventLoggingService, EventLoggingService>();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
-
-            services.AddScoped<CircuitHandler, IsConnectedCircuitHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

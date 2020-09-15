@@ -1,0 +1,36 @@
+﻿@if (HasRendered)
+{
+    @ChildContent
+}
+else
+{
+    <LoadingSpinner Title="Loading ..." />
+}
+
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private bool HasRendered { get; set; }
+
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!HasRendered)
+        {
+            _eventLoggingService.TrackEvent("Pre-Rendeder stage - showing loading message");
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            HasRendered = true;
+            StateHasChanged();
+        }
+    }
+}
