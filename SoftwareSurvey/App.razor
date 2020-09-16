@@ -2,17 +2,19 @@
 @inject NavigationManager NavigationManager
 
 <PreRenderLoadingMessage>
-    <Router AppAssembly="@typeof(Program).Assembly">
-        <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        </Found>
-        <NotFound>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
-                @{ Is404 = true; }
-            </LayoutView>
-        </NotFound>
-    </Router>
+    <EnsureBeenThroughStart>
+        <Router AppAssembly="@typeof(Program).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            </Found>
+            <NotFound>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p>Sorry, there's nothing at this address.</p>
+                    @{ Is404 = true; }
+                </LayoutView>
+            </NotFound>
+        </Router>
+     </EnsureBeenThroughStart>
 </PreRenderLoadingMessage>
 
 @code {

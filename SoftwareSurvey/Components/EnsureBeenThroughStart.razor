@@ -1,21 +1,31 @@
-﻿@code {
+﻿@if (_valid)
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
     [Inject]
     public SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
     [Inject]
     public SoftwareSurvey.Services.INavigationManagerWrapper NavigationManager { get; set; }
 
+    private bool _valid;
+
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender)
+        if (firstRender || !_valid)
         {
-            if (NavigationManager.CurrentPath != "")
-            {
-                if (!_surveyResponse.HasBeenToStart)
-                {
-                    NavigationManager.NavigateTo("");
-                }
-            }
+            _valid = IsOnStartPage || _surveyResponse.HasBeenToStart;
+
+            if (!_valid) NavigationManager.NavigateTo("");
+
+            StateHasChanged();
         }
     }
+
+    private bool IsOnStartPage => NavigationManager.CurrentPath == "" || NavigationManager.CurrentPath == "/";
 }
