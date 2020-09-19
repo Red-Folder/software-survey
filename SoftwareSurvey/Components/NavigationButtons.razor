@@ -18,7 +18,7 @@
     public string NextUrl { get; set; }
 
     [CascadingParameter]
-    public EditContext EditContext { get; set; }
+    private EditContext EditContext { get; set; }
 
     [Inject]
     private SoftwareSurvey.Services.IEventLoggingService EventLoggingService { get; set; }
@@ -26,10 +26,10 @@
     [Inject]
     private NavigationManager NavigationManager { get; set; }
 
-    protected bool HasPrevious => !string.IsNullOrWhiteSpace(PreviousUrl);
-    protected bool HasNext => !string.IsNullOrWhiteSpace(NextUrl);
+    private bool HasPrevious => !string.IsNullOrWhiteSpace(PreviousUrl);
+    private bool HasNext => !string.IsNullOrWhiteSpace(NextUrl);
 
-    protected void HandleNext()
+    private void HandleNext()
     {
         if (HasNext)
         {
@@ -44,7 +44,7 @@
         }
     }
 
-    protected void HandlePrevious()
+    private void HandlePrevious()
     {
         if (HasPrevious)
         {
@@ -59,7 +59,7 @@
         }
     }
 
-    protected bool IsOkToLeavePage()
+    private bool IsOkToLeavePage()
     {
         if (EditContext is null) return true;
 

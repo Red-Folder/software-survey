@@ -1,11 +1,10 @@
 ﻿@page "/OneChange"
-@inherits OneChangeBase
 
 <PageTitle Title="ONE CHANGE" Position="5" />
 
 <p>What is the one thing you'd change about your custom Software Development?  (Optional)</p>
 
-<EditForm EditContext="@EditContext">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
 
     <div class="form-group">
@@ -16,3 +15,17 @@
 
     <NavigationButtons PreviousUrl="/Experiences" NextUrl="/Contact" />
 </EditForm>
+
+@code
+{
+    [Inject]
+    private Models.OneChange Model { get; set; }
+
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded one change page");
+    }
+}

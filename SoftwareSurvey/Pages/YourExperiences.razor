@@ -1,11 +1,10 @@
 ﻿@page "/Experiences"
-@inherits YourExperiencesBase
 
 <PageTitle Title="YOUR EXPERIENCES" Position="4" />
 
 <p>How happy are you with the below when it comes to your custom Software Development?</p>
 
-<EditForm EditContext="@EditContext">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
 
     <OptionGrid TValue="SoftwareSurvey.Models.Experiences" NotApplicableLabel="Don't know" />
@@ -14,3 +13,17 @@
 
     <NavigationButtons PreviousUrl="/SoftwareTypes" NextUrl="/OneChange" />
 </EditForm>
+
+@code
+{
+    [Inject]
+    private Models.Experiences Model { get; set; }
+
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded your experiences page");
+    }
+}

@@ -1,11 +1,10 @@
 ﻿@page "/SoftwareTypes"
-@inherits SoftwareTypesBase 
 
 <PageTitle Title="SOFTWARE TYPES" Position="3" />
 
 <p>Which types of custom software do you use, and how critical are they to your organisation?</p>
 
-<EditForm EditContext="@EditContext">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
 
     <OptionGrid TValue="SoftwareSurvey.Models.SoftwareTypes" NotApplicableLabel="Don't use" />
@@ -15,3 +14,16 @@
     <NavigationButtons PreviousUrl="/Demographic" NextUrl="/Experiences" />
 </EditForm>
 
+@code
+{
+    [Inject]
+    private Models.SoftwareTypes Model { get; set; }
+
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded software types page");
+    }
+}

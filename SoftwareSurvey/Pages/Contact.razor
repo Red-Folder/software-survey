@@ -1,11 +1,10 @@
 ﻿@page "/Contact"
-@inherits ContactBase
 
 <PageTitle Title="FURTHER CONTACT" Position="6" />
 
 <p>Would you like to be contacted?</p>
 
-<EditForm EditContext="@EditContext">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
 
     <div class="contact-option-row">
@@ -40,3 +39,17 @@
 
     <NavigationButtons PreviousUrl="/OneChange" NextUrl="/ThankYou" />
 </EditForm>
+
+@code
+{
+    [Inject]
+    private Models.Contact Model { get; set; }
+
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded contact page");
+    }
+}

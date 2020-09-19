@@ -12,10 +12,10 @@
 @code
 {
     [Inject]
-    public Models.SurveyResponse Model { get; set; }
+    private Models.SurveyResponse Model { get; set; }
 
     [Inject]
-    public Services.IEventLoggingService EventLoggingService { get; set; }
+    private Services.IEventLoggingService EventLoggingService { get; set; }
 
     protected override void OnInitialized()
     {

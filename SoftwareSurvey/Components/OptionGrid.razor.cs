@@ -8,11 +8,11 @@ namespace SoftwareSurvey.Components
 {
     public partial class OptionGrid<TValue>
     {
-        [CascadingParameter]
-        public EditContext EditContext { get; set; }
-
         [Parameter]
         public string NotApplicableLabel { get; set; }
+
+        [CascadingParameter]
+        private EditContext EditContext { get; set; }
 
         private List<Option> _options;
 

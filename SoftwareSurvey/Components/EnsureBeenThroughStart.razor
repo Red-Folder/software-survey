@@ -8,10 +8,10 @@
     public RenderFragment ChildContent { get; set; }
 
     [Inject]
-    public SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
 
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     private bool _valid;
 

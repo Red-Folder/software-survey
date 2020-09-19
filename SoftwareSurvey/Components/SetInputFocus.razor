@@ -1,12 +1,12 @@
 ﻿@code {
-    [Inject]
-    private IJSRuntime _jsRuntime { get; set; }
-
     [Parameter]
     public string ById { get; set; }
 
     [Parameter]
     public string ByName { get; set; }
+
+    [Inject]
+    private IJSRuntime _jsRuntime { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

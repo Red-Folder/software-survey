@@ -1,9 +1,8 @@
 ﻿@page "/Demographic"
-@inherits DemographicBase
 
 <PageTitle Title="DEMOGRAPHICS" Position="2" />
 
-<EditForm EditContext="@EditContext">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
 
     <div class="form-group">
@@ -59,3 +58,17 @@
 
     <NavigationButtons PreviousUrl="/" NextUrl="/SoftwareTypes" />
 </EditForm>
+
+@code
+{
+    [Inject]
+    private Models.Demographic Model { get; set; }
+
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded demographic page");
+    }
+}
