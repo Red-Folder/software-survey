@@ -8,8 +8,6 @@ namespace SoftwareSurvey.Pages
         protected override void OnInitialized()
         {
             TrackEvent("Loaded one change page");
-            PreviousUrl = "/Experiences";
-            NextUrl = "/Contact";
             base.OnInitialized();
         }
     }

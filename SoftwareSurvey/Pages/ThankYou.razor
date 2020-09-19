@@ -1,5 +1,4 @@
 ﻿@page "/ThankYou"
-@inherits ThankYouBase
 
 @if (Saved)
 {
@@ -48,4 +47,63 @@
 else
 {
     <LoadingSpinner Title="SAVING ..."></LoadingSpinner>
+}
+
+@code
+{
+    [Inject]
+    private Models.SurveyResponse Model { get; set; }
+    [Inject]
+    private Services.IEventLoggingService EventLoggingService { get; set; }
+    [Inject]
+    private Services.IPersistanceManager PersistanceManager { get; set; }
+
+    private bool Saved { get; set; }
+    private bool Error { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EventLoggingService.TrackEvent("Loaded thank you page");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            SaveData();
+        }
+    }
+
+    protected void HandleRetry(EventArgs eventArgs)
+    {
+        Saved = false;
+        Error = false;
+        StateHasChanged();
+
+        SaveData();
+    }
+
+    private void SaveData()
+    {
+        EventLoggingService.TrackEvent("Save started");
+
+        var task = PersistanceManager.Persist(Model);
+        task.ContinueWith(async x =>
+        {
+            Error = !x.Result;
+            Saved = true;
+            await InvokeAsync(StateHasChanged);
+
+            if (Error)
+            {
+                EventLoggingService.TrackEvent("Save failed");
+            }
+            else
+            {
+                EventLoggingService.TrackEvent("Save completed");
+            }
+        });
+
+        Task.Run(() => task);
+    }
 }

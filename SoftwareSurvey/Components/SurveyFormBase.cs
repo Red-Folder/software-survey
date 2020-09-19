@@ -1,24 +1,19 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using SoftwareSurvey.Models;
 
 namespace SoftwareSurvey.Components
 {
-    public class SurveyFormBase<T> : SurveyPageBase<T> where T : StateObject
+    public class SurveyFormBase<T> : SurveyPageBase where T : StateObject
     {
         protected EditContext EditContext;
+
+        [Inject]
+        protected T Model { get; set; }
 
         protected override void OnInitialized()
         {
             EditContext = new EditContext(Model);
-        }
-
-        protected override bool IsOkToLeavePage()
-        {
-            if (!EditContext.Validate()) return false;
-
-            if (!Model.IsValid()) return false;
-
-            return true;
         }
     }
 }

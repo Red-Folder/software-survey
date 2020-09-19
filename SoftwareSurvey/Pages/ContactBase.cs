@@ -1,5 +1,4 @@
 ﻿using SoftwareSurvey.Components;
-using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Pages
 {
@@ -8,8 +7,6 @@ namespace SoftwareSurvey.Pages
         protected override void OnInitialized()
         {
             TrackEvent("Loaded contact page");
-            PreviousUrl = "/OneChange";
-            NextUrl = "/ThankYou";
             base.OnInitialized();
         }
     }

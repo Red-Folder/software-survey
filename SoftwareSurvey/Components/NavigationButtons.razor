@@ -1,25 +1,73 @@
 ﻿<div class="form-group navigation-buttons">
-    @if (PreviousHandler.HasDelegate)
+    @if (HasPrevious)
     {
-        <button type="button" class="btn previous-navigation-button" @onclick="PreviousHandler">Previous</button>
+        <button type="button" class="btn previous-navigation-button" @onclick="HandlePrevious">Previous</button>
     }
-    @if (NextHandler.HasDelegate)
+    @if (HasNext)
     {
-        <button type="submit" class="btn next-navigation-button" @onclick="NextHandler">Next</button>
+        <button type="submit" class="btn next-navigation-button" @onclick="HandleNext">Next</button>
     }
 
     <div class="clear"></div>
 </div>
+
 @code {
     [Parameter]
-    public bool ShowPrevious { get; set; }
-
+    public string PreviousUrl { get; set; }
     [Parameter]
-    public bool ShowNext { get; set; }
+    public string NextUrl { get; set; }
 
-    [Parameter]
-    public EventCallback PreviousHandler { get; set; }
+    [CascadingParameter]
+    public EditContext EditContext { get; set; }
 
-    [Parameter]
-    public EventCallback NextHandler { get; set; }
+    [Inject]
+    private SoftwareSurvey.Services.IEventLoggingService EventLoggingService { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected bool HasPrevious => !string.IsNullOrWhiteSpace(PreviousUrl);
+    protected bool HasNext => !string.IsNullOrWhiteSpace(NextUrl);
+
+    protected void HandleNext()
+    {
+        if (HasNext)
+        {
+            EventLoggingService.TrackEvent("Next button pressed");
+            if (!IsOkToLeavePage())
+            {
+                EventLoggingService.TrackEvent("Next not actioned due to invalid model");
+                return;
+            }
+            EventLoggingService.TrackEvent("Next actioned");
+            NavigationManager.NavigateTo(NextUrl);
+        }
+    }
+
+    protected void HandlePrevious()
+    {
+        if (HasPrevious)
+        {
+            EventLoggingService.TrackEvent("Previous button pressed");
+            if (!IsOkToLeavePage())
+            {
+                EventLoggingService.TrackEvent("Previous not actioned due to invalid model");
+                return;
+            }
+            EventLoggingService.TrackEvent("Previous actioned");
+            NavigationManager.NavigateTo(PreviousUrl);
+        }
+    }
+
+    protected bool IsOkToLeavePage()
+    {
+        if (EditContext is null) return true;
+
+        if (!EditContext.Validate()) return false;
+
+        var model = EditContext.Model as Models.StateObject;
+        if (model is null) return true;
+
+        return model.IsValid();
+    }
 }

@@ -8,8 +8,6 @@ namespace SoftwareSurvey.Pages
         protected override void OnInitialized()
         {
             TrackEvent("Loaded software types page");
-            PreviousUrl = "/Demographic";
-            NextUrl = "/Experiences";
             base.OnInitialized();
         }
     }

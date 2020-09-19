@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inherits IndexBase
 
 <PageTitle Title="WELCOME" Position="1" />
 
@@ -8,4 +7,19 @@
 <p>If so, please add your voice to this short 5 step survey.</p>
 <p>Responses will be used to produce a report of UK Executive's attitude towards custom Software Development.</p>
 
-<NavigationButtons NextHandler="@HandleNext" />
+<NavigationButtons NextUrl="/Demographic" />
+
+@code
+{
+    [Inject]
+    public Models.SurveyResponse Model { get; set; }
+
+    [Inject]
+    public Services.IEventLoggingService EventLoggingService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Model.HasBeenToStart = true;
+        EventLoggingService.TrackEvent("Loaded index page");
+    }
+}

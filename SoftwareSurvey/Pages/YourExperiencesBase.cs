@@ -7,8 +7,6 @@ namespace SoftwareSurvey.Pages
         protected override void OnInitialized()
         {
             TrackEvent("Loaded your experiences page");
-            PreviousUrl = "/SoftwareTypes";
-            NextUrl = "/OneChange";
             base.OnInitialized();
         }
     }
