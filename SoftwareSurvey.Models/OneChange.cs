@@ -2,7 +2,7 @@
 
 namespace SoftwareSurvey.Models
 {
-    public class OneChange : StateObject
+    public class OneChange
     {
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }

@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareSurvey.Models
 {
-    public class Contact : StateObject
+    public class Contact : IValidatableObject
     {
         [DisplayName("With the results of the survery?")]
         [JsonProperty(PropertyName = "resultsOfTheSurvey")]
@@ -23,11 +24,12 @@ namespace SoftwareSurvey.Models
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
-        public override bool IsValid() => IsEmailValid;
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return IsEmailValid ? null : new ValidationResult[] { new ValidationResult("Please provided email", new string[] { "Email" }) };
+        }
 
-        [JsonIgnore]
-        public bool IsEmailValid => !RequiresEmailAddress || !string.IsNullOrEmpty(Email);
-        [JsonIgnore]
-        public bool RequiresEmailAddress => SurveyResults || FollowUpQuestions || FurtherSurveys;
+        private bool IsEmailValid => !RequiresEmailAddress || !string.IsNullOrEmpty(Email);
+        private bool RequiresEmailAddress => SurveyResults || FollowUpQuestions || FurtherSurveys;
     }
 }

@@ -22,16 +22,12 @@
         <InputCheckbox id="further-surveys" @bind-Value="Model.FurtherSurveys" class="form-control" />
     </div>
 
-    @if (Model.RequiresEmailAddress)
+    @if (Model.SurveyResults || Model.FollowUpQuestions || Model.FurtherSurveys)
     {
         <div class="form-group">
             <Label For="@(() => Model.Email)" />
             <InputText id="email" @bind-Value="Model.Email" class="form-control" />
             <ValidationMessage For="@(() => Model.Email)" />
-            @if (!Model.IsEmailValid)
-            {
-                <div class="validation-message">Please provided email</div>
-            }
         </div>
     }
 

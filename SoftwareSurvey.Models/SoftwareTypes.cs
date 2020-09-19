@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareSurvey.Models
 {
-    public class SoftwareTypes: StateObject
+    public class SoftwareTypes
     {
         [DisplayName("eCommerce")]
         [Description("Website(s) selling products or services")]

@@ -63,11 +63,6 @@
     {
         if (EditContext is null) return true;
 
-        if (!EditContext.Validate()) return false;
-
-        var model = EditContext.Model as Models.StateObject;
-        if (model is null) return true;
-
-        return model.IsValid();
+        return EditContext.Validate();
     }
 }
