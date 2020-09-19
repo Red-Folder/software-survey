@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareSurvey.Models
 {
-    public class Experiences: IStateObject
+    public class Experiences: StateObject
     {
         [DisplayName("ROI")]
         [Description("Is it providing Return On Investment?")]

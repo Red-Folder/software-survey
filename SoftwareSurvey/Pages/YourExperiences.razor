@@ -1,39 +1,16 @@
 ﻿@page "/Experiences"
+@inherits YourExperiencesBase
 
-<EnsureBeenThroughStart />
-
-<Navigation />
+<PageTitle Title="YOUR EXPERIENCES" Position="4" />
 
 <p>How happy are you with the below when it comes to your custom Software Development?</p>
 
-<SurveyNavigation Model="@_model">
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
     <OptionGrid TValue="SoftwareSurvey.Models.Experiences" NotApplicableLabel="Don't know" />
-</SurveyNavigation>
 
-@code
-{
-    [Inject]
-    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    <SetInputFocus ByName="return-on-investment" />
 
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
-
-    [Inject]
-    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
-
-    private SoftwareSurvey.Models.Experiences _model;
-
-    protected override void OnInitialized()
-    {
-        _model = _surveyResponse.Experiences;
-        _eventLoggingService.TrackEvent("Loaded your experiences page");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementByName", "return-on-investment");
-        }
-    }
-}
+    <NavigationButtons NextHandler="@HandleNext" PreviousHandler="@HandlePrevious" />
+</EditForm>

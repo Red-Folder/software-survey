@@ -1,39 +1,18 @@
 ﻿@page "/OneChange"
+@inherits OneChangeBase
 
-<Navigation />
+<PageTitle Title="ONE CHANGE" Position="5" />
 
 <p>What is the one thing you'd change about your custom Software Development?  (Optional)</p>
 
-<SurveyNavigation Model="@_model">
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
     <div class="form-group">
-        <InputTextArea id="text" @bind-Value="@_model.Text" class="form-control" rows="5" />
+        <InputTextArea id="text" @bind-Value="@Model.Text" class="form-control" rows="5" />
     </div>
-</SurveyNavigation>
 
-@code
-{
-    [Inject]
-    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    <SetInputFocus ById="text" />
 
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
-
-    [Inject]
-    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
-
-    private SoftwareSurvey.Models.OneChange _model;
-
-    protected override void OnInitialized()
-    {
-        _model = _surveyResponse.OneChange;
-        _eventLoggingService.TrackEvent("Loaded one change page");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementById", "text");
-        }
-    }
-}
+    <NavigationButtons NextHandler="@HandleNext" PreviousHandler="@HandlePrevious" />
+</EditForm>

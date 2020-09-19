@@ -1,0 +1,26 @@
+﻿<div class="navigation">
+    <h1>@Title</h1>
+    <p class="hint-short">Page @Position of 7 </p>
+    <p class="hint-full">
+        <span class="@(Position == 1 ? "current" : "")">Start</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 2 ? "current" : "")">Step 1</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 3 ? "current" : "")">Step 2</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 4 ? "current" : "")">Step 3</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 5 ? "current" : "")">Step 4</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 6 ? "current" : "")">Step 5</span>
+        <span>&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+        <span class="@(Position == 7 ? "current" : "")">End</span>
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public int Position { get; set; }
+}

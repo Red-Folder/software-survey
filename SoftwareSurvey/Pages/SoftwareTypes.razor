@@ -1,37 +1,17 @@
 ﻿@page "/SoftwareTypes"
+@inherits SoftwareTypesBase 
 
-<Navigation />
+<PageTitle Title="SOFTWARE TYPES" Position="3" />
 
 <p>Which types of custom software do you use, and how critical are they to your organisation?</p>
 
-<SurveyNavigation Model="@_model">
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
     <OptionGrid TValue="SoftwareSurvey.Models.SoftwareTypes" NotApplicableLabel="Don't use" />
-</SurveyNavigation>
 
-@code
-{
-    [Inject]
-    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    <SetInputFocus ByName="e-commerce" />
 
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    <NavigationButtons NextHandler="@HandleNext" PreviousHandler="@HandlePrevious" />
+</EditForm>
 
-    [Inject]
-    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
-
-    private SoftwareSurvey.Models.SoftwareTypes _model;
-
-    protected override void OnInitialized()
-    {
-        _model = _surveyResponse.SoftwareTypes;
-        _eventLoggingService.TrackEvent("Loaded software types page");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementByName", "e-commerce");
-        }
-    }
-}

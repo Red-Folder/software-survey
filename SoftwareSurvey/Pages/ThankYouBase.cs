@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SoftwareSurvey.Components;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
 using System;
@@ -6,23 +7,17 @@ using System.Threading.Tasks;
 
 namespace SoftwareSurvey.Pages
 {
-    public partial class ThankYou
+    public class ThankYouBase : SurveyPageBase<SurveyResponse>
     {
-        [Inject]
-        private SurveyResponse _surveyResponse { get; set; }
-
         [Inject]
         private IPersistanceManager _persistanceManager { get; set; }
 
-        [Inject]
-        private IEventLoggingService _eventLoggingService { get; set; }
-
-        private bool Saved { get; set; }
-        private bool Error { get; set; }
+        protected bool Saved { get; set; }
+        protected bool Error { get; set; }
 
         protected override void OnInitialized()
         {
-            _eventLoggingService.TrackEvent("Loaded thank you page");
+            TrackEvent("Loaded thank you page");
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -33,7 +28,7 @@ namespace SoftwareSurvey.Pages
             }
         }
 
-        private void HandleRetry(EventArgs eventArgs)
+        protected void HandleRetry(EventArgs eventArgs)
         {
             Saved = false;
             Error = false;
@@ -44,9 +39,9 @@ namespace SoftwareSurvey.Pages
 
         private void SaveData()
         {
-            _eventLoggingService.TrackEvent("Save started");
+            TrackEvent("Save started");
 
-            var task = _persistanceManager.Persist(_surveyResponse);
+            var task = _persistanceManager.Persist(Model);
             task.ContinueWith(async x =>
             {
                 Error = !x.Result;
@@ -55,11 +50,11 @@ namespace SoftwareSurvey.Pages
 
                 if (Error)
                 {
-                    _eventLoggingService.TrackEvent("Save failed");
+                    TrackEvent("Save failed");
                 }
                 else
                 {
-                    _eventLoggingService.TrackEvent("Save completed");
+                    TrackEvent("Save completed");
                 }
             });
 

@@ -1,0 +1,28 @@
+﻿@code {
+    [Inject]
+    private IJSRuntime _jsRuntime { get; set; }
+
+    [Parameter]
+    public string ById { get; set; }
+
+    [Parameter]
+    public string ByName { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (!string.IsNullOrWhiteSpace(ById))
+            {
+                await _jsRuntime.InvokeVoidAsync("SurveySite.focusElementById", ById);
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(ByName))
+                {
+                    await _jsRuntime.InvokeVoidAsync("SurveySite.focusElementByName", ByName);
+                }
+            }
+        }
+    }
+}

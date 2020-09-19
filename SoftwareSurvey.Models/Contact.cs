@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareSurvey.Models
 {
-    public class Contact : IStateObject
+    public class Contact : StateObject
     {
         [DisplayName("With the results of the survery?")]
         [JsonProperty(PropertyName = "resultsOfTheSurvey")]
@@ -22,5 +22,12 @@ namespace SoftwareSurvey.Models
         [EmailAddress]
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
+
+        public override bool IsValid() => IsEmailValid;
+
+        [JsonIgnore]
+        public bool IsEmailValid => !RequiresEmailAddress || !string.IsNullOrEmpty(Email);
+        [JsonIgnore]
+        public bool RequiresEmailAddress => SurveyResults || FollowUpQuestions || FurtherSurveys;
     }
 }

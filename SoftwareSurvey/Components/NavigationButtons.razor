@@ -1,9 +1,9 @@
 ﻿<div class="form-group navigation-buttons">
-    @if (ShowPrevious)
+    @if (PreviousHandler.HasDelegate)
     {
         <button type="button" class="btn previous-navigation-button" @onclick="PreviousHandler">Previous</button>
     }
-    @if (ShowNext)
+    @if (NextHandler.HasDelegate)
     {
         <button type="submit" class="btn next-navigation-button" @onclick="NextHandler">Next</button>
     }

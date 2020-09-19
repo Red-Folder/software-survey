@@ -1,52 +1,51 @@
 ﻿@page "/ThankYou"
+@inherits ThankYouBase
 
-<SurveyNavigation>
-    @if (Saved)
+@if (Saved)
+{
+    if (Error)
     {
-        if (Error)
-        {
-            <h1 class="temporary-header">SORRY</h1>
-            <p>An error has occurred while trying to save your details.</p>
-            <p>Please press the button below to retry:</p>
-            <button type="submit" class="btn retry-button" @onclick="HandleRetry">Retry</button>
-        }
-        else
-        {
-            <Navigation />
-
-            <p>
-                Your valuable responses will be used to produce a report of UK Executive's attitude towards custom Software Development.
-            </p>
-            <p>
-                For <strong>SurveyCircle</strong> users (www.surveycircle.com): The Survey Code is: <strong>P62J-K62F-QK5X-5ZQX</strong>
-            </p>
-            <hr />
-
-            <p>In the meanwhile;</p>
-
-            <div class="podcast-link">
-                <h2>Listen to the podcast</h2>
-                <div class="text-center">
-                    <a href="https://red-folder.com/podcasts">
-                        <img src="/images/PodcastLogo-250x250.png" alt="Podcast Logo" />
-                    </a>
-                </div>
-            </div>
-
-            <div class="newsletter-signup">
-                <h2>Sign up to the newsletter</h2>
-                <form class="form-inline" action="https://tinyletter.com/red-folder" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/red-folder', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
-                    <input type="hidden" value="1" name="embed" />
-
-                    <input class="form-control" type="text" name="email" id="tlemail" placeholder="Your email address" />
-
-                    <button type="submit" class="btn" value="Subscribe">Subscribe to the newsletter</button>
-                </form>
-            </div>
-        }
+        <h1 class="temporary-header">SORRY</h1>
+        <p>An error has occurred while trying to save your details.</p>
+        <p>Please press the button below to retry:</p>
+        <button type="submit" class="btn retry-button" @onclick="HandleRetry">Retry</button>
     }
     else
     {
-        <LoadingSpinner Title="SAVING ..."></LoadingSpinner>
+        <PageTitle Title="THANK YOU" Position="7" />
+
+        <p>
+            Your valuable responses will be used to produce a report of UK Executive's attitude towards custom Software Development.
+        </p>
+        <p>
+            For <strong>SurveyCircle</strong> users (www.surveycircle.com): The Survey Code is: <strong>P62J-K62F-QK5X-5ZQX</strong>
+        </p>
+        <hr />
+
+        <p>In the meanwhile;</p>
+
+        <div class="podcast-link">
+            <h2>Listen to the podcast</h2>
+            <div class="text-center">
+                <a href="https://red-folder.com/podcasts">
+                    <img src="/images/PodcastLogo-250x250.png" alt="Podcast Logo" />
+                </a>
+            </div>
+        </div>
+
+        <div class="newsletter-signup">
+            <h2>Sign up to the newsletter</h2>
+            <form class="form-inline" action="https://tinyletter.com/red-folder" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/red-folder', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+                <input type="hidden" value="1" name="embed" />
+
+                <input class="form-control" type="text" name="email" id="tlemail" placeholder="Your email address" />
+
+                <button type="submit" class="btn" value="Subscribe">Subscribe to the newsletter</button>
+            </form>
+        </div>
     }
-</SurveyNavigation>
+}
+else
+{
+    <LoadingSpinner Title="SAVING ..."></LoadingSpinner>
+}

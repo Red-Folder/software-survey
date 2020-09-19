@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SoftwareSurvey.Models
 {
-    public class Demographic: IStateObject
+    public class Demographic: StateObject
     {
         [Required(ErrorMessage = "Please provide company size")]
         [DisplayName("Company Size")]

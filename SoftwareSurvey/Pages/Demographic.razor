@@ -1,11 +1,14 @@
 ﻿@page "/Demographic"
+@inherits DemographicBase
 
-<Navigation />
+<PageTitle Title="DEMOGRAPHICS" Position="2" />
 
-<SurveyNavigation Model="@_model">
+<EditForm EditContext="@EditContext">
+    <DataAnnotationsValidator />
+
     <div class="form-group">
-        <Label For="@(() => _model.CompanySize)" />
-        <InputSelect id="company-size" @bind-Value="@_model.CompanySize" class="form-control">
+        <Label For="@(() => Model.CompanySize)" />
+        <InputSelect id="company-size" @bind-Value="@Model.CompanySize" class="form-control">
             <option value="">Please select</option>
             <option value="Myself only">Myself only</option>
             <option value="2-10 employees">2-10 employees</option>
@@ -17,12 +20,12 @@
             <option value="5,001-10,000 employees">5001 - 10,000 employees</option>
             <option value="10,001+ employees">10,001+ employees</option>
         </InputSelect>
-        <ValidationMessage For="@(() => _model.CompanySize)" />
+        <ValidationMessage For="@(() => Model.CompanySize)" />
     </div>
 
     <div class="form-group">
-        <Label For="@(() => _model.JobSeniority)" />
-        <InputSelect id="job-seniority" @bind-Value="@_model.JobSeniority" class="form-control">
+        <Label For="@(() => Model.JobSeniority)" />
+        <InputSelect id="job-seniority" @bind-Value="@Model.JobSeniority" class="form-control">
             <option value="">Please select</option>
             <option value="Senior">Senior</option>
             <option value="Manager">Manager</option>
@@ -32,51 +35,27 @@
             <option value="Partner">Partner</option>
             <option value="Other">Other</option>
         </InputSelect>
-        <ValidationMessage For="@(() => _model.JobSeniority)" />
+        <ValidationMessage For="@(() => Model.JobSeniority)" />
     </div>
 
     <div class="form-group">
-        <Label For="@(() => _model.JobTitle)" />
-        <InputText id="job-title" @bind-Value="@_model.JobTitle" class="form-control" />
+        <Label For="@(() => Model.JobTitle)" />
+        <InputText id="job-title" @bind-Value="@Model.JobTitle" class="form-control" />
     </div>
 
     <div class="form-group">
-        <Label For="@(() => _model.UKBased)" />
-        <InputSelect id="uk-based" @bind-Value="@_model.UKBased" class="form-control">
+        <Label For="@(() => Model.UKBased)" />
+        <InputSelect id="uk-based" @bind-Value="@Model.UKBased" class="form-control">
             <option value="">Please select</option>
             <option value="Fully">Fully</option>
             <option value="Mostly">Mostly</option>
             <option value="Partially">Partially</option>
             <option value="Not at all">Not at all</option>
         </InputSelect>
-        <ValidationMessage For="@(() => _model.UKBased)" />
+        <ValidationMessage For="@(() => Model.UKBased)" />
     </div>
-</SurveyNavigation>
 
-@code
-{
-    [Inject]
-    private SoftwareSurvey.Models.SurveyResponse _surveyResponse { get; set; }
+    <SetInputFocus ById="company-size" />
 
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
-
-    [Inject]
-    private SoftwareSurvey.Services.IEventLoggingService _eventLoggingService { get; set; }
-
-    private SoftwareSurvey.Models.Demographic _model;
-
-    protected override void OnInitialized()
-    {
-        _model = _surveyResponse.Demographic;
-        _eventLoggingService.TrackEvent("Loaded demographic page");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("SurveySite.focusElementById", "company-size");
-        }
-    }
-}
+    <NavigationButtons NextHandler="@HandleNext" PreviousHandler="@HandlePrevious" />
+</EditForm>

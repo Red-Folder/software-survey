@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,71 +27,14 @@ namespace SoftwareSurvey
             services.AddSignalR().AddAzureSignalR();
 
             services.AddSingleton(x => Configuration.GetSection(PersistanceConfiguration.Section).Get<PersistanceConfiguration>());
-            services.AddSingleton<ISteps>(x =>
-            {
-                var start = new Step
-                {
-                    Path = "/",
-                    PageTitle = "WELCOME"
-                };
-                var demographic = new Step
-                {
-                    Path = "/Demographic",
-                    PageTitle = "DEMOGRAPHICS"
-                };
-                var softwareTypes = new Step
-                {
-                    Path = "/SoftwareTypes",
-                    PageTitle = "SOFTWARE TYPES"
-                };
-                var experiences = new Step
-                {
-                    Path = "/Experiences",
-                    PageTitle = "YOUR EXPERIENCES"
-                };
-                var oneChange = new Step
-                {
-                    Path = "/OneChange",
-                    PageTitle = "ONE CHANGE"
-                };
-                var contact = new Step
-                {
-                    Path = "/Contact",
-                    PageTitle = "FURTHER CONTACT"
-                };
-                var thankYou = new Step
-                {
-                    Path = "/ThankYou",
-                    PageTitle = "THANK YOU"
-                };
-                start.NextStep = demographic;
-                demographic.PreviousStep = start;
-                demographic.NextStep = softwareTypes;
-                softwareTypes.PreviousStep = demographic;
-                softwareTypes.NextStep = experiences;
-                experiences.PreviousStep = softwareTypes;
-                experiences.NextStep = oneChange;
-                oneChange.PreviousStep = experiences;
-                oneChange.NextStep = contact;
-                contact.PreviousStep = oneChange;
-                contact.NextStep = thankYou;
-
-                return new Steps(new List<Step>
-                {
-                    start,
-                    demographic,
-                    softwareTypes,
-                    experiences,
-                    oneChange,
-                    contact,
-                    thankYou
-                });
-            });
 
             services.AddScoped(x => new SurveyResponse());
+            services.AddTransient(provider => provider.GetService<SurveyResponse>().Demographic);
+            services.AddTransient(provider => provider.GetService<SurveyResponse>().SoftwareTypes);
+            services.AddTransient(provider => provider.GetService<SurveyResponse>().Experiences);
+            services.AddTransient(provider => provider.GetService<SurveyResponse>().OneChange);
+            services.AddTransient(provider => provider.GetService<SurveyResponse>().Contact);
 
-            services.AddTransient<INavigationManagerWrapper, NavigationManagerWrapper>();
-            services.AddTransient<ISurveyNavigationService, SurveyNavigationService>();
             //services.AddTransient<IPersistanceManager, FakePersistanceManager>();
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
             services.AddTransient<IEventLoggingService, EventLoggingService>();
