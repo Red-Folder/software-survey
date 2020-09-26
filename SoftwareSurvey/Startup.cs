@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SoftwareSurvey.Models;
 using SoftwareSurvey.Services;
+using SoftwareSurvey.Wrappers;
 using System.Collections.Generic;
 
 namespace SoftwareSurvey
@@ -39,6 +40,8 @@ namespace SoftwareSurvey
             services.AddTransient<IPersistanceManager, CosmosDbPersistanceManager>();
             services.AddTransient<IEventLoggingService, EventLoggingService>();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+
+            services.AddTransient<INavigationManager, NavigationManagerWrapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
