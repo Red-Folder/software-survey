@@ -1,3 +1,22 @@
 ﻿@typeparam TValue
+@using System.Reflection
 
 <label @attributes="AdditionalAttributes">@label</label>
+
+@code
+{
+    [Parameter]
+    public System.Linq.Expressions.Expression<Func<TValue>> For { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    private string label => GetDisplayName();
+
+    private string GetDisplayName()
+    {
+        var expression = (System.Linq.Expressions.MemberExpression)For.Body;
+        var value = expression.Member.GetCustomAttribute(typeof(System.ComponentModel.DisplayNameAttribute)) as System.ComponentModel.DisplayNameAttribute;
+        return value?.DisplayName ?? expression.Member.Name ?? "";
+    }
+}

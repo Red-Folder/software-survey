@@ -1,0 +1,41 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Description="Label correctly renders DisplayName">
+    <TestInput>
+        <Label For="@(() => Model.Name)" />
+    </TestInput>
+    <ExpectedOutput>
+        <label>Test Display Text</label>
+    </ExpectedOutput>
+</SnapshotTest>
+
+<SnapshotTest Description="Label correctly renders property name if DisplayName not present">
+    <TestInput>
+        <Label For="@(() => Model.NoDisplayName)" />
+    </TestInput>
+    <ExpectedOutput>
+        <label>NoDisplayName</label>
+    </ExpectedOutput>
+</SnapshotTest>
+
+<SnapshotTest Description="Label correctly renders atrributes">
+    <TestInput>
+        <Label class="test" For="@(() => Model.Name)" />
+    </TestInput>
+    <ExpectedOutput>
+        <label class="test">Test Display Text</label>
+    </ExpectedOutput>
+</SnapshotTest>
+
+
+@code {
+    public TestModel Model { get; set; }
+
+    public class TestModel
+    {
+        [System.ComponentModel.DisplayName("Test Display Text")]
+        public string Name { get; set; }
+
+        public string NoDisplayName { get; set; }
+    }
+}
