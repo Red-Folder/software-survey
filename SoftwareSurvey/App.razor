@@ -3,18 +3,35 @@
 
 <PreRenderLoadingMessage>
     <EnsureBeenThroughStart>
-        <Router AppAssembly="@typeof(Program).Assembly">
-            <Found Context="routeData">
-                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            </Found>
-            <NotFound>
-                <LayoutView Layout="@typeof(MainLayout)">
-                    <p>Sorry, there's nothing at this address.</p>
-                    @{ Is404 = true; }
-                </LayoutView>
-            </NotFound>
-        </Router>
-     </EnsureBeenThroughStart>
+        @if (RequestDetails.IsTest)
+        {
+            <Router AppAssembly="@typeof(Program).Assembly">
+                <Found Context="routeData">
+                    <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                </Found>
+                <NotFound>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p>Sorry, there's nothing at this address.</p>
+                        @{ Is404 = true; }
+                    </LayoutView>
+                </NotFound>
+            </Router>
+        }
+        else
+        {
+            <h1 class="temporary-header">Survey closed</h1>
+
+            <p>This survey is currently closed.  If you would like to participate in future surveys, please sign up to newsletter or listen to the podcasts</p>
+
+            <hr />
+
+            <NewsletterSignup />
+
+            <hr />
+
+            <PodcastAdvert />
+        }
+    </EnsureBeenThroughStart>
 </PreRenderLoadingMessage>
 
 @code {
