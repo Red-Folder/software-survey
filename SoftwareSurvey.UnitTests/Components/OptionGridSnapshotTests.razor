@@ -1,0 +1,75 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Description="Options Grid renders correctly">
+    <TestInput>
+        <CascadingValue Value="EditContext">
+            <OptionGrid NotApplicableLabel="N/A" TValue="Model" />
+        </CascadingValue>
+    </TestInput>
+    <ExpectedOutput>
+        <div class="option-grid">
+            <span class="header"></span>
+            <span class="header">N/A</span>
+            <span class="header"></span>
+            <span class="header">(Not) 1</span>
+            <span class="header">2</span>
+            <span class="header">3</span>
+            <span class="header">4</span>
+            <span class="header">(Very) 5</span>
+            <hr>
+            <span>Value 1 Name</span>
+            <input type="radio" name="value-1" checked="">
+            <span></span>
+            <input type="radio" name="value-1">
+            <input type="radio" name="value-1">
+            <input type="radio" name="value-1">
+            <input type="radio" name="value-1">
+            <input type="radio" name="value-1">
+            <i class="option-grid-row-description">Value 1 Description</i>
+            <hr>
+            <span>Value 2 Name</span>
+            <input type="radio" name="value-2" checked="">
+            <span></span>
+            <input type="radio" name="value-2">
+            <input type="radio" name="value-2">
+            <input type="radio" name="value-2">
+            <input type="radio" name="value-2">
+            <input type="radio" name="value-2">
+            <i class="option-grid-row-description">Value 2 Description</i>
+            <hr>
+            <span>Value 3 Name</span>
+            <input type="radio" name="value-3" checked="">
+            <span></span>
+            <input type="radio" name="value-3">
+            <input type="radio" name="value-3">
+            <input type="radio" name="value-3">
+            <input type="radio" name="value-3">
+            <input type="radio" name="value-3">
+            <i class="option-grid-row-description">Value 3 Description</i>
+            <hr>
+        </div>
+    </ExpectedOutput>
+</SnapshotTest>
+
+@code
+{
+    public EditContext EditContext = new EditContext(new Model());
+
+    public class Model
+    {
+        [System.ComponentModel.DisplayName("Value 1 Name")]
+        [System.ComponentModel.Description("Value 1 Description")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Value 1 is required")]
+        public int Value1 { get; set; }
+
+        [System.ComponentModel.DisplayName("Value 2 Name")]
+        [System.ComponentModel.Description("Value 2 Description")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Value 2 is required")]
+        public int Value2 { get; set; }
+
+        [System.ComponentModel.DisplayName("Value 3 Name")]
+        [System.ComponentModel.Description("Value 3 Description")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Value 3 is required")]
+        public int Value3 { get; set; }
+    }
+}

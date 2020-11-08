@@ -24,7 +24,7 @@
     private SoftwareSurvey.Services.IEventLoggingService EventLoggingService { get; set; }
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private SoftwareSurvey.Wrappers.INavigationManager NavigationManager { get; set; }
 
     private bool HasPrevious => !string.IsNullOrWhiteSpace(PreviousUrl);
     private bool HasNext => !string.IsNullOrWhiteSpace(NextUrl);

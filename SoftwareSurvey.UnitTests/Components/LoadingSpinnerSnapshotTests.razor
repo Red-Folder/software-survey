@@ -1,0 +1,15 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Description="LoadingSpinner shows provided Title">
+    <TestInput>
+        <LoadingSpinner Title="Test Title"/>
+    </TestInput>
+    <ExpectedOutput>
+        <h1 class="temporary-header">Test Title</h1>
+        <p class="loading-spinner">
+            <!-- Taken from https://loading.io/css/ -->
+            <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </p>
+    </ExpectedOutput>
+</SnapshotTest>
+

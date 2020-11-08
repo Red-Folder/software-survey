@@ -1,0 +1,30 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Description="Page Title renders correctly">
+    <TestInput>
+        <PageTitle Position="3" Title="Test" />
+    </TestInput>
+    <ExpectedOutput>
+        <div class="navigation">
+            <h1>Test</h1>
+            <p class="hint-short">
+                Page 3 of 7
+            </p>
+            <p class="hint-full">
+                <span class="">Start</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="">Step 1</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="current">Step 2</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="">Step 3</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="">Step 4</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="">Step 5</span>
+                <span>&nbsp;&nbsp;&gt;</span>
+                <span class="">End</span>
+            </p>
+        </div>
+    </ExpectedOutput>
+</SnapshotTest>

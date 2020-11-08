@@ -1,0 +1,50 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Setup="RegisterServices" Description="Navigation Buttons shows previous if there is one">
+    <TestInput>
+        <NavigationButtons PreviousUrl="https://test.com" />
+    </TestInput>
+    <ExpectedOutput>
+        <div class="form-group navigation-buttons">
+            <button type="button" class="btn previous-navigation-button">Previous</button>
+            <div class="clear"></div>
+        </div>
+    </ExpectedOutput>
+</SnapshotTest>
+
+<SnapshotTest Setup="RegisterServices" Description="Navigation Buttons shows next if there is one">
+    <TestInput>
+        <NavigationButtons NextUrl="https://test.com" />
+    </TestInput>
+    <ExpectedOutput>
+        <div class="form-group navigation-buttons">
+            <button type="submit" class="btn next-navigation-button">Next</button>
+            <div class="clear"></div>
+        </div>
+    </ExpectedOutput>
+</SnapshotTest>
+
+<SnapshotTest Setup="RegisterServices" Description="Navigation Buttons shows both if they are set">
+    <TestInput>
+        <NavigationButtons PreviousUrl="https://test.com" NextUrl="https://test.com" />
+    </TestInput>
+    <ExpectedOutput>
+        <div class="form-group navigation-buttons">
+            <button type="button" class="btn previous-navigation-button">Previous</button>
+            <button type="submit" class="btn next-navigation-button">Next</button>
+            <div class="clear"></div>
+        </div>
+    </ExpectedOutput>
+</SnapshotTest>
+
+@code
+{
+    void RegisterServices(SnapshotTest snapshotTest)
+    {
+        var eventLoggingService = new Mock<SoftwareSurvey.Services.IEventLoggingService>();
+        snapshotTest.Services.AddSingleton(eventLoggingService.Object);
+
+        var navigationManager = new Mock<SoftwareSurvey.Wrappers.INavigationManager>();
+        snapshotTest.Services.AddSingleton(navigationManager.Object);
+    }
+}
