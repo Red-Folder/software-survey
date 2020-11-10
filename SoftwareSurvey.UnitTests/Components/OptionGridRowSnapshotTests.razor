@@ -1,0 +1,52 @@
+﻿@inherits TestComponentBase
+
+<SnapshotTest Setup="Setup"
+              Description="Option Grid Row renders correctly">
+    <TestInput>
+        <CascadingValue Value="EditContext">
+            <OptionGridRow Id="@Option.Id"
+                           Label="@Option.Label"
+                           Description="@Option.Description"
+                           ValueGetter="@Option.ValueGetter"
+                           ValueSetter="@Option.ValueSetter"
+                           For="@Option.For" />
+        </CascadingValue>
+    </TestInput>
+    <ExpectedOutput>
+        <span>Value 1 Name</span>
+        <input type="radio" name="value-1">
+        <span></span>
+        <input type="radio" name="value-1">
+        <input type="radio" name="value-1" checked="">
+        <input type="radio" name="value-1">
+        <input type="radio" name="value-1">
+        <input type="radio" name="value-1">
+        <i class="option-grid-row-description">Value 1 Description</i>
+        <hr>
+    </ExpectedOutput>
+</SnapshotTest>
+
+@code
+{
+    public Sample Model;
+    public SoftwareSurvey.Models.Option Option;
+    public EditContext EditContext;
+
+    public void Setup(SnapshotTest snapshotTest)
+    {
+        Model = new Sample
+        {
+            Value1 = 2
+        };
+        Option = new Models.Option(this, Model, Model.GetType().GetProperty("Value1"));
+        EditContext = new EditContext(Model);
+    }
+
+    public class Sample
+    {
+        [System.ComponentModel.DisplayName("Value 1 Name")]
+        [System.ComponentModel.Description("Value 1 Description")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Value 1 is required")]
+        public int Value1 { get; set; }
+    }
+}
