@@ -10,6 +10,9 @@ else
 
 @code {
     [Parameter]
+    public bool UnitTestMode { get; set; }
+
+    [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     private bool HasRendered { get; set; }
@@ -30,7 +33,11 @@ else
         if (firstRender)
         {
             HasRendered = true;
-            StateHasChanged();
+
+            if (!UnitTestMode)
+            {
+                StateHasChanged();
+            }
         }
     }
 }
