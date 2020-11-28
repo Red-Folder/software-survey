@@ -101,21 +101,6 @@ h2 {
     font-weight: bold;
 }
 
-.newsletter-signup form {
-    text-align: center;
-}
-
-#tlemail {
-    width: 100%;
-}
-
-.newsletter-signup form button {
-    width: 100%;
-    margin-top: 0.5rem;
-}
-
-
-
 input[type='radio'] {
     transform: scale(1.5);
 }
